@@ -1,0 +1,62 @@
+﻿@model MASHROEE.ViewModel.ProfileViewModel
+
+@{
+    ViewData["Title"] = "EditProfile";
+}
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="EditProfile" enctype="multipart/form-data">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="username" class="control-label"></label>
+                <input asp-for="username" class="form-control" />
+                <span asp-validation-for="username" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="name" class="control-label"></label>
+                <input asp-for="name" class="form-control" />
+                <span asp-validation-for="name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Phone" class="control-label"></label>
+                <input asp-for="Phone" class="form-control" />
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <img src="@Model.imagurl" alt="Profile Picture" class="profile-image shadow">
+                <label asp-for="imagurl" class="control-label">Profile Image</label>
+                <input asp-for="imagurl" class="form-control" type="file"/>
+                <span asp-validation-for="imagurl" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Update Profile" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Profile">Back to Profile</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+<style>
+    .profile-image {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        margin-bottom: 15px;
+        border: 5px solid #f8f9fa;
+        display:flex
+       
+    }
+    </style>

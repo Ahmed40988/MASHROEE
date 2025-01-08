@@ -1,0 +1,89 @@
+﻿@model MASHROEE.ViewModel.RegisterViewModel
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+<h1>Register</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Register" enctype="multipart/form-data" method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="username" class="control-label"></label>
+                <input asp-for="username" class="form-control" />
+                <span asp-validation-for="username" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Phone" class="control-label"></label>
+                <input asp-for="Phone" class="form-control" />
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="RoleName" class="control-label">register for a </label>
+                <fieldset>
+                    <select asp-for="RoleName">
+
+                        <option value="">Select Role</option>
+
+                        <option value="User">User</option>
+
+                        <option value="Supplier">Supplier</option>
+                    </select>
+                </fieldset>
+                <span asp-validation-for="RoleName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="imagefromuser" class="control-label">Upload Image Profile</label>
+                <input asp-for ="imagefromuser" type="file" class="form-control" />
+                <span asp-validation-for="imagefromuser" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Gender" class="control-label"></label>
+            <fieldset>
+                <select asp-for="Gender">
+
+                    <option value="">Select Gender</option>
+
+                    <option value="M">Male</option>
+
+                    <option value="F">Famle</option>
+                </select>
+            </fieldset>
+                <span asp-validation-for="Gender" class="text-danger"></span>
+                </div>
+
+            <div class="form-group">
+                <input type="submit" value="Sign In" class="btn btn-primary" />
+                <a href="@Url.Action("Login","Account")" class=" accordion-button">LogIn</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
