@@ -1,0 +1,25 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+    @if (User.Identity.IsAuthenticated)
+    {
+        <a href="@Url.Action("Profile","Account")" class=" accordion-button">Profile</a>
+        <a href="@Url.Action("EditProfile","Account")" class=" accordion-button">Update Profile</a>
+        <a href="@Url.Action("Logout","Account")" class=" accordion-button">Logout</a>
+        <a href="@Url.Action("AddRole","Role")" class=" accordion-button">Add New Role</a>
+        <a href="@Url.Action("index","Role")" class=" accordion-button">List of Roles</a>
+        <a href="@Url.Action("Users","Dashboard")" class=" accordion-button">List of users</a>
+        <a href="@Url.Action("index","Category")" class=" accordion-button">List of Categories</a>
+        <a href="@Url.Action("Create","Category")" class=" accordion-button">create Category</a>
+    }
+    @if (!User.Identity.IsAuthenticated)
+    {
+    <a href="@Url.Action("Register","Account")" class=" accordion-button">Sign in</a>
+    <a href="@Url.Action("Login","Account")" class=" accordion-button">LogIn</a>
+    }
+</div>
