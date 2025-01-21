@@ -1,4 +1,6 @@
-﻿namespace MASHROEE.ViewModel
+﻿using MASHROEE.Models;
+
+namespace MASHROEE.ViewModel
 {
     public class UserViewModel
     {
@@ -9,10 +11,10 @@
         public string ?image { get; set; }
         public IList<string>? Roles  { get; set; }
 
+       public ICollection<Product> products { get; set; } //as a supplier
         
       //  public List<Product> orders { get; set; } //as a buer
 
-      //  public List<Product> products { get; set; } //as a supplier
 
 
     }

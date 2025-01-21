@@ -246,6 +246,7 @@ D:\courses\back end.net\projects\MASHROEE\obj\Debug\net8.0\MASHROEE.csproj.CoreC
 D:\courses\back end.net\projects\MASHROEE\obj\Debug\net8.0\MASHROEE.MvcApplicationPartsAssemblyInfo.cache
 D:\courses\back end.net\projects\MASHROEE\obj\Debug\net8.0\MASHROEE.RazorAssemblyInfo.cache
 D:\courses\back end.net\projects\MASHROEE\obj\Debug\net8.0\MASHROEE.RazorAssemblyInfo.cs
+D:\courses\back end.net\projects\MASHROEE\obj\Debug\net8.0\MASHROEE.sourcelink.json
 D:\courses\back end.net\projects\MASHROEE\obj\Debug\net8.0\staticwebassets.build.json
 D:\courses\back end.net\projects\MASHROEE\obj\Debug\net8.0\staticwebassets.development.json
 D:\courses\back end.net\projects\MASHROEE\obj\Debug\net8.0\staticwebassets\msbuild.MASHROEE.Microsoft.AspNetCore.StaticWebAssets.props

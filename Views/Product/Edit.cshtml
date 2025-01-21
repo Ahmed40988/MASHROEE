@@ -1,0 +1,55 @@
+﻿@model MASHROEE.ViewModel.ProductViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+    var listcategory = ViewBag.listcategory;
+}
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" enctype="multipart/form-data" method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <input hidden asp-for="Id" value="@Model.Id" />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label for="CategoriesDropdown">Category</label>
+                <select name="CategoryName" id="categoryDropdown" class="form-control">
+                    <option value="0">>>Select Category For Your Product>></option>
+                    @foreach (var category in listcategory)
+                    {
+                        <option value="@category.Name">@category.Name</option>
+                    }
+                </select>
+                <span asp-validation-for="CategoryName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Price" class="control-label">Price in $</label>
+                <input asp-for="Price" class="form-control" placeholder="$" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="image" class="control-label"></label>
+                <input asp-for="image" type="file" class="form-control" />
+                <span asp-validation-for="image" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

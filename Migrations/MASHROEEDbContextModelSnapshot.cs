@@ -127,6 +127,9 @@ namespace MASHROEE.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("ApplicationuserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
@@ -144,10 +147,15 @@ namespace MASHROEE.Migrations
                     b.Property<int?>("categoryid")
                         .HasColumnType("int");
 
+                    b.Property<string>("image")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("userid")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ApplicationuserId");
 
                     b.HasIndex("categoryid");
 
@@ -291,6 +299,10 @@ namespace MASHROEE.Migrations
 
             modelBuilder.Entity("MASHROEE.Models.Product", b =>
                 {
+                    b.HasOne("MASHROEE.Models.Applicationuser", null)
+                        .WithMany("Products")
+                        .HasForeignKey("ApplicationuserId");
+
                     b.HasOne("MASHROEE.Models.Category", "category")
                         .WithMany("Products")
                         .HasForeignKey("categoryid")
@@ -355,6 +367,11 @@ namespace MASHROEE.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("MASHROEE.Models.Applicationuser", b =>
+                {
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("MASHROEE.Models.Category", b =>

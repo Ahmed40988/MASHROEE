@@ -16,6 +16,8 @@
         <a href="@Url.Action("Users","Dashboard")" class=" accordion-button">List of users</a>
         <a href="@Url.Action("index","Category")" class=" accordion-button">List of Categories</a>
         <a href="@Url.Action("Create","Category")" class=" accordion-button">create Category</a>
+        <a href="@Url.Action("Create","Product")" class=" accordion-button">create Product</a>
+        <a href="@Url.Action("index","Product")" class=" accordion-button">List of Products</a>
     }
     @if (!User.Identity.IsAuthenticated)
     {
