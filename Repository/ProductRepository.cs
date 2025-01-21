@@ -21,11 +21,16 @@ namespace MASHROEE.Repository
 
         public Product GetProductById(int id)
         {
-            return context.Products.SingleOrDefault(p => p.Id == id);
+            return context.Products.Include(p=>p.category).SingleOrDefault(p => p.Id == id);
+        }
+
+        public IEnumerable<Product> GetallProductsforuserid(string id)
+        {
+            return context.Products.Where(p=>p.userid==id).ToList();
         }
         public Product GetProductByName(string name)
         {
-            return context.Products.SingleOrDefault(p => p.Name == name);
+            return context.Products.Include(p=>p.category).SingleOrDefault(p => p.Name == name);
         }
         public IEnumerable<Product>Search(string SearchTerm)
         {

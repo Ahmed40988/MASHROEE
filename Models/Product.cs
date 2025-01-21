@@ -14,5 +14,7 @@
         public int? categoryid { get; set; }
 
         public Category category { get; set; }
+
+        public string? image { get; set; }
     }
 }

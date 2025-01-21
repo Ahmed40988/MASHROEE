@@ -7,7 +7,10 @@ namespace MASHROEE.IRepository
       IEnumerable<Product> GetAllProducts();
 
       Product GetProductById(int id);
+
       Product GetProductByName(string name);
+
+    IEnumerable<Product> GetallProductsforuserid(string id);
       IEnumerable<Product> Search(string SearchTerm);
       void AddProduct(Product product);
       void updateproduct(Product product);
