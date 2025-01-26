@@ -1,54 +1,75 @@
-﻿@model MASHROEE.ViewModel.ProductViewModel
+﻿@using MASHROEE.settings
+@model ProductViewModel
 
 @{
     ViewData["Title"] = "Create";
-    var listcategory = ViewBag.listc as List<Category>;
 }
 <hr />
+ <form asp-action="Create" class="ml-4" enctype="multipart/form-data" method="post" novalidate>
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create" enctype="multipart/form-data" method="post" novalidate>
+    <div class="col-md-6">
             <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label for="CategoriesDropdown">Category</label>
-                <select asp-for="CategoryName" id="categoryDropdown" class="form-control">
-                    <option value="">>>Select Category For Your Product>></option>
-                    @foreach (var category in listcategory)
-                    {
-                        <option value="@category.Name">@category.Name</option>
-                    }
-                </select>
-                <span asp-validation-for="CategoryName" class="text-danger"></span>
 
+            <div>
+                <label asp-for="Name" class="form-label mt-4">Name</label>
+                <input class="form-control" asp-for="Name" placeholder="Enter Name" data-has-listeners="true">
+                <span asp-validation-for="Name" class=" text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Price" class="control-label">Price in $</label>
-                <input asp-for="Price" class="form-control" placeholder="$" />
-                <span asp-validation-for="Price" class="text-danger"></span>
+
+            <div>
+                <label asp-for="Description" class="form-label mt-4">Description</label>
+                <input class="form-control" asp-for="Description" placeholder="Enter Description" data-has-listeners="true">
+                <span asp-validation-for="Description" class=" text-danger"></span>
             </div>
+
+            <div>
+                <label asp-for="CategoryName" class="form-label mt-4">Category</label>
+                <select class="form-select" asp-for="CategoryName" asp-items="Model.categories">
+                    <option value="">Select a category</option>
+                </select>
+            </div>
+
+
+            <div>
+                <label asp-for="Price" class="form-label mt-4"> Price</label>
+                <div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">$</span>
+                        <input  asp-for="Price" type="text" class="form-control" aria-label="Amount (to the nearest dollar)" data-has-listeners="true">
+                        <span class="input-group-text">.00</span>
+                        <span asp-validation-for="Price" class=" text-danger"></span>
+                    </div>
+            
             <div class="form-group">
                 <label asp-for="image" class="control-label"></label>
-                <input asp-for="image" type="file" class="form-control" />
-                <span asp-validation-for="image" class="text-danger"></span>
+                <input asp-for="image" type="file" class="form-control" data-rule-extension="jpg,png,jpeg"
+                data-msg-extension="Not allowed Extension!"
+                               data-rule-filesize="1048576"
+                        data-msg-filesize="The max allowed size is 1MB"/>
+                        <small class="form-text text-muted">Only JPG, PNG, or JPEG files allowed with a max size of 1MB.</small>
+                <span asp-validation-for="image" class="text-danger"></span> 
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
-        </form>
     </div>
+        <div class="col-md-6"></div>
 </div>
+</form>
 
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+
+@* validtion clint site  *@
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        $.validator.addMethod('filesize', function (value, element, param) {
+            return this.optional(element) || element.files[0].size <= param;
+        });
+    </script>
+
+}
 

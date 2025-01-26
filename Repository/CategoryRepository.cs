@@ -1,5 +1,6 @@
 ﻿using MASHROEE.IRepository;
 using MASHROEE.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
 
@@ -17,6 +18,13 @@ namespace MASHROEE.Repository
         public IEnumerable<Category> GetAllCategorys()
         {
             return context.Category.Include(c=>c.Products) .ToList();
+        } 
+        public IEnumerable<SelectListItem> Getselectlist()
+        {
+            return context.Category.Select(c => new SelectListItem
+                { Value = c.Name.ToString(), Text = c.Name })
+                .OrderBy(c => c.Text)
+                .ToList();
         }
 
         public Category GetCategoryById(int id)

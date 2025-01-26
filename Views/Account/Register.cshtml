@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Register";
 }
-
+@* 
 <h1>Register</h1>
 
 <hr />
@@ -78,12 +78,113 @@
             </div>
         </form>
     </div>
-</div>
+</div> *@
 
-<div>
-    <a asp-action="Index">Back to List</a>
+<div class="container mt-5">
+    <div class="card shadow-lg">
+        <div class="card-header text-dark text-center" style="background: #FFC300;">
+            <h2>Join MASHROEE</h2>
+        </div>
+        <div class="card-body">
+            <form asp-action="Register" enctype="multipart/form-data" novalidate>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <!-- Username -->
+                <div class="form-group mb-3">
+                    <label asp-for="username" class="form-label"></label>
+                    <input asp-for="username" class="form-control" placeholder="Enter your username" required />
+                    <span asp-validation-for="username" class="text-danger"></span>
+                </div>
+
+                <!-- Name -->
+                <div class="form-group mb-3">
+                    <label asp-for="Name" class="form-label"></label>
+                    <input asp-for="Name" class="form-control" placeholder="Enter your name" required />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <!-- Email -->
+                <div class="form-group mb-3">
+                    <label asp-for="Email" class="form-label"></label>
+                    <input asp-for="Email" class="form-control" placeholder="Enter your email" required />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <!-- Gender -->
+                <div class="form-group mb-3">
+                    <label asp-for="Gender" class="form-label"></label>
+                    <select asp-for="Gender" class="form-control" asp-items="@(new SelectList(new List<SelectListItem>
+                    {
+                        new SelectListItem { Text = "Select your gender", Value = "" },
+                        new SelectListItem { Text = "Male", Value = "M" },
+                        new SelectListItem { Text = "Female", Value = "F" }
+                    }, "Value", "Text"))" required>
+                    </select>
+                </div>
+
+                <!-- Password -->
+                <div class="form-group mb-3">
+                    <label asp-for="Password" class="form-label"></label>
+                    <input asp-for="Password" class="form-control" placeholder="Enter your password" required />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+
+                <!-- Phone -->
+                <div class="form-group mb-3">
+                    <label asp-for="Phone" class="form-label"></label>
+                    <input asp-for="Phone" class="form-control" placeholder="Enter your phone number" required />
+                    <span asp-validation-for="Phone" class="text-danger"></span>
+                </div>
+
+                <!-- Image URL -->
+                <div class="form-group mb-3">
+                    <label asp-for="imagefromuser" class="form-label"></label>
+                    <input asp-for="imagefromuser" type="file" class="form-control" required />
+                    <span asp-validation-for="imagefromuser" class="text-danger"></span>
+                </div>
+                <!-- Role Name -->
+                <div class="form-group">
+                    <label asp-for="RoleName" class="control-label">register for a </label>
+                    <fieldset>
+                        <select asp-for="RoleName">
+
+                            <option value="">Select Role</option>
+
+                            <option value="User">User</option>
+
+                            <option value="Supplier">Supplier</option>
+                        </select>
+                    </fieldset>
+                    <span asp-validation-for="RoleName" class="text-danger"></span>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="d-grid">
+                    <input type="submit" value="Create" class="btn btn-custom" />
+                    <a href="@Url.Action("Login","Account")" class=" accordion-button">LogIn</a>
+                </div>
+            </form>
+        </div>
+        <div class="card-footer text-center">
+            <a asp-action="Index" class="btn btn-link">Back to List</a>
+        </div>
+    </div>
 </div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+<!-- CSS Styles -->
+<style>
+    .btn-custom {
+        background-color: #FFC300;
+        border-color: #FFC300;
+        color: #3D464D !important;
+        border-radius: 6px;
+        transition: background-color 0.3s ease;
+    }
+
+        .btn-custom:hover {
+            background-color: #c99a96;
+        }
+</style>
