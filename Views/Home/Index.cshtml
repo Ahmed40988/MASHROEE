@@ -1,27 +1,51 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model IEnumerable<MASHROEE.ViewModel.ProductViewModel>
+
+@{
+    ViewData["Title"] = "Index";
 }
+<a asp-action="Create" class="btn btn-outline-warning btn-lg">
+    Create New
+    <i class="bi bi-patch-plus btn-lg"></i>
+</a>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+@if (Model == null || !Model.Any())
+{
+    <div class="alert alert-warning mt-5">
+        <h4 class="alert-heading">NO Products!</h4>
+        <p class="mb-0">No Product Were Added Yet!</p>
+    </div>
+}
+else
+{
+    <div class="row mt-5">
+        @foreach (var Product in Model)
+        {
+            <div class="col-lg-4 col-md-6">
+                <a asp-action="Details" asp-route-id="@Product.Id" class="text-decoration-none">
+                    <div class="card border-info mb-3" style="max-width: 20rem;">
+                        <img src="@Product.image" class="card-img-top" alt="@Product.Name" style="height: 180px; object-fit: cover;">
 
-    @if (User.Identity.IsAuthenticated)
-    {
-        <a href="@Url.Action("Profile","Account")" class=" accordion-button">Profile</a>
-        <a href="@Url.Action("EditProfile","Account")" class=" accordion-button">Update Profile</a>
-        <a href="@Url.Action("Logout","Account")" class=" accordion-button">Logout</a>
-        <a href="@Url.Action("AddRole","Role")" class=" accordion-button">Add New Role</a>
-        <a href="@Url.Action("index","Role")" class=" accordion-button">List of Roles</a>
-        <a href="@Url.Action("Users","Dashboard")" class=" accordion-button">List of users</a>
-        <a href="@Url.Action("index","Category")" class=" accordion-button">List of Categories</a>
-        <a href="@Url.Action("Create","Category")" class=" accordion-button">create Category</a>
-        <a href="@Url.Action("Create","Product")" class=" accordion-button">create Product</a>
-        <a href="@Url.Action("index","Product")" class=" accordion-button">List of Products</a>
-    }
-    @if (!User.Identity.IsAuthenticated)
-    {
-    <a href="@Url.Action("Register","Account")" class=" accordion-button">Sign in</a>
-    <a href="@Url.Action("Login","Account")" class=" accordion-button">LogIn</a>
-    }
-</div>
+                        <div class="card-body text-center">
+                            <h5 class="card-title text-dark fw-bold">@Product.Name</h5>
+                            <h4 class="text-success">@Product.Price $</h4>
+                            <p class="card-text text-muted">
+                                @if (!string.IsNullOrEmpty(Product.Description) && Product.Description.Length > 50)
+                                {
+                                    @Product.Description.Substring(0, 50)
+                                    <span>....</span>
+
+                                }
+                                else
+                                {
+                                    @Product.Description
+                                }
+                            </p>
+                            <button type="button" class="btn btn-light">BUY</button>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        }
+    </div>
+
+}

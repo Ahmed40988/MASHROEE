@@ -1,4 +1,5 @@
 ﻿using MASHROEE.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace MASHROEE.IRepository
 {
@@ -8,6 +9,7 @@ namespace MASHROEE.IRepository
         Category GetCategoryById(int id);
         Category GetCategoryByName(string name);
         List<Product> GetProducts(int CategoryId);
+        IEnumerable<SelectListItem> Getselectlist();
         List<Product> Search(int CategoryId, string SearchTerm);
         void AddCategory(Category category);
         void updatecategory(Category category);

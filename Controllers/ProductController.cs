@@ -3,6 +3,7 @@ using MASHROEE.Models;
 using MASHROEE.ViewModel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal;
 
 namespace MASHROEE.Controllers
@@ -41,14 +42,18 @@ namespace MASHROEE.Controllers
 
             return View(listmodel);
         }
+
         [HttpGet]
         public IActionResult Create()
         {
-            var list = categoryRepository.GetAllCategorys();
-            ViewBag.listc = list;
+            ProductViewModel model = new ProductViewModel()
+            {
+                categories = categoryRepository.Getselectlist()
 
-            return View();
+            };
+            return View(model);
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ProductViewModel newp, IFormFile image)
@@ -81,8 +86,10 @@ namespace MASHROEE.Controllers
                 }
                 return Content("Category is not found");
             }
+            newp.categories = categoryRepository.Getselectlist();
             return View(newp);
         }
+
         [HttpGet]
         public IActionResult Edit(int id)
         {

@@ -2,12 +2,14 @@
 using MASHROEE.Models;
 using MASHROEE.Repository;
 using MASHROEE.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace MASHROEE.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class DashBoardController : Controller
     {
         private readonly IProductRepository productRepository;
