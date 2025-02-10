@@ -39,8 +39,13 @@
                         <span class="input-group-text">.00</span>
                         <span asp-validation-for="Price" class=" text-danger"></span>
                     </div>
-            
-            <div class="form-group">
+                    <div class="form-group">
+                        <label asp-for="Quantity" class="control-label"> avaliable Quantity</label>
+                        <input asp-for="Quantity" class="form-control" placeholder="Enter avaliable Quantity" />
+                        <span asp-validation-for="Quantity" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
                 <label asp-for="image" class="control-label"></label>
                 <input asp-for="image" type="file" class="form-control" data-rule-extension="jpg,png,jpeg"
                 data-msg-extension="Not allowed Extension!"
@@ -60,8 +65,6 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
-
-@* validtion clint site  *@
 
 @section Scripts{
     <partial name="_ValidationScriptsPartial" />

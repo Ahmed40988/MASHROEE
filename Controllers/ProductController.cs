@@ -1,10 +1,12 @@
 ﻿using MASHROEE.IRepository;
 using MASHROEE.Models;
 using MASHROEE.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal;
+using System.Security.Claims;
 
 namespace MASHROEE.Controllers
 {
@@ -24,26 +26,55 @@ namespace MASHROEE.Controllers
         public IActionResult Index()
         {
             var list = productRepository.GetAllProducts();
-            var listmodel = new List<ProductViewModel>();
-            foreach (var item in list)
+            return View(list);
+        }
+
+        public IActionResult Search(string searchBy, string searchValue)
+        {
+            if (string.IsNullOrEmpty(searchValue))
             {
-                var model = new ProductViewModel()
-                {
-                    Id = item.Id,
-                    Name = item.Name,
-                    Description = item.Description,
-                    CategoryName = item.category.Name,
-                    Price = item.Price,
-                    CreatedDate = item.CreatedDate,
-                    image = item.image,
-                };
-                listmodel.Add(model);
+                return Json(new { success = false, message = "Please enter a name or price for search." });
+            }
+            if (string.IsNullOrEmpty(searchBy))
+            {
+                return Json(new { success = false, message = "Please select search by name or search by Price!." });
             }
 
-            return View(listmodel);
+            if (searchBy.ToLower() == "productname")
+            {
+                var list1 = productRepository.Searchbyname(searchValue);
+                var list = productRepository.Maping(list1);
+                return View(list);
+            }
+            else if (searchBy.ToLower() == "price")
+            {
+                if (decimal.TryParse(searchValue, out decimal price))
+                {
+                    var list1 = productRepository.Searchbyprice(price);
+                    var list = productRepository.Maping(list1);
+                    return View(list);
+                }
+                else
+                {
+              
+                    return Json(new { success = false, message = "Invalid price format. Please enter a valid number." });
+                }
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult Details(int id)
+        {
+           var product= productRepository.GetProductById(id);
+            if(product==null)
+                return NotFound();
+
+            return View(product);
         }
 
         [HttpGet]
+        [Authorize(Roles = "admin,Supplier")]
         public IActionResult Create()
         {
             ProductViewModel model = new ProductViewModel()
@@ -68,6 +99,7 @@ namespace MASHROEE.Controllers
                         Name = newp.Name,
                         Description = newp.Description,
                         Price = newp.Price,
+                        Quantity = newp.Quantity,
                         CreatedDate = DateTime.Now,
                         categoryid = category.Id,
                         userid = userManager.GetUserId(User),
@@ -91,9 +123,10 @@ namespace MASHROEE.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "admin,Supplier")]
         public IActionResult Edit(int id)
         {
-            ViewBag.listcategory=categoryRepository.GetAllCategorys();
+            var listcategory=categoryRepository.Getselectlist();
             var product = productRepository.GetProductById(id) ;
             var model = new ProductViewModel()
             {
@@ -101,15 +134,18 @@ namespace MASHROEE.Controllers
                 Name = product.Name,
                 Description = product.Description,
                 Price = product.Price,
+                Quantity= product.Quantity,
                 CreatedDate = product.CreatedDate,
                 image= product.image,
+                categories=listcategory,
                 CategoryName = product.category?.Name ?? "No Category"
             };
             return View(model);
         }
         [HttpPost]  
-        public async Task<IActionResult> Edit(int id,ProductViewModel newp,IFormFile image)
+        public async Task<IActionResult> Edit(int id,ProductViewModel newp,IFormFile?image)
         {
+            ModelState.Remove("image");
             if (ModelState.IsValid)
             {
                 var productDB= productRepository.GetProductById(id);
@@ -118,6 +154,7 @@ namespace MASHROEE.Controllers
                 productDB.Name = newp.Name;
                 productDB.Description = newp.Description;
                 productDB.Price = newp.Price;
+                productDB.Quantity = newp.Quantity;
                 productDB.CreatedDate = newp.CreatedDate;
                 productDB.categoryid =category.Id;
                 if (image != null && image.Length > 0)
@@ -134,21 +171,31 @@ namespace MASHROEE.Controllers
                     productDB.image = productDB.image;
                 }
                 productRepository.updateproduct(productDB);
-                return RedirectToAction("Index");
+                return RedirectToAction("index","Home");
             }
             return View(newp);
         }
-
+        [Authorize(Roles = "admin,Supplier")]
         public ActionResult Delete(int id)
         {
-            if (ModelState.IsValid)
-            {
-                productRepository.RemoveProduct(id);
-                return RedirectToAction("Index");
-            }
-            return Content("Produt is not Deleted!");
+            productRepository.RemoveProduct(id);
+            ViewBag.DeleteSuccess = "Product deleted successfully!";
+            return RedirectToAction("index", "Home");
         }
+        [Authorize]
+        [Authorize(Roles = "admin,Supplier")]
+        public IActionResult MyProducts()
+        {
+            var userid=User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (userid != null)
+            {
+                var products = productRepository.GetallProductsforuserid(userid);
+                var modellist = productRepository.Maping(products);
 
+                 return View(modellist);
+            }
+            return Content("Supllier is Not found");
+        }
 
     }
 }

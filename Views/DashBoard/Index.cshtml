@@ -1,7 +1,137 @@
-﻿<button  type="button" onclick="location.href='@Url.Action("Users", "DashBoard")'">Users</button>
-<button  type="button" onclick="location.href='@Url.Action("Index", "Product")'">Products</button>
-<button  type="button" onclick="location.href='@Url.Action("Index", "Category")'">Category</button>
-<button  type="button" onclick="location.href='@Url.Action("#", "#")'">Orders</button>
-<button type="button" onclick="location.href='@Url.Action("index","Role")'">Roles</button>
-<button type="button" onclick="location.href='@Url.Action("AddRole", "Role")'">Add New Role</button>
-<button type="button" onclick="location.href='@Url.Action("Create","Category")'">create Category</button>
+﻿
+
+<style>
+    /* Custom Sidebar */
+    #sidebar {
+        width: 250px;
+        height: calc(100vh - 56px); /* Adjusted for Navbar height */
+        background-color: #2c3e50;
+        position: fixed;
+        top: 56px; /* Starts below the Navbar */
+        left: 0;
+        padding: 20px;
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        overflow-y: auto; /* Vertical scroll if content is long */
+    }
+
+        #sidebar .btn {
+            width: 100%;
+            margin-bottom: 10px;
+            text-align: left;
+            padding: 10px 15px;
+            color: #ecf0f1;
+            background-color: #34495e;
+            border: none;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+            #sidebar .btn:hover {
+                background-color: #1abc9c;
+                color: #fff;
+                transform: translateX(10px);
+            }
+
+            #sidebar .btn:active {
+                background-color: #16a085;
+            }
+
+    /* Content Area */
+    #contentArea {
+        margin-left: 170px; /* Adjusted for Sidebar width */
+        padding: 20px;
+        background-color: #2c3e50;
+        min-height: calc(100vh); /* Adjusted for Navbar height */
+        color: #ecf0f1;
+        overflow-x: hidden; /* Prevent horizontal scroll */
+        width:90%;
+        background-color: #2c3e50;
+        position: fixed;
+        top: 56px; /* Starts below the Navbar */
+        left: 8%;
+        padding: 20px;
+        overflow-y: auto; /* Vertical scroll if content is long */
+    }
+
+    /* Page Title */
+    .page-title {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        color: #ecf0f1;
+    }
+
+    /* Cards */
+    .card {
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+        background-color: #34495e;
+        color: #ecf0f1;
+    }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+    /* Custom Buttons */
+    .btn-custom {
+        background-color: #1abc9c;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        transition: background-color 0.3s ease;
+    }
+
+    #dynamicContent {
+   
+        overflow: auto;
+        max-height: 500px;
+        scroll-behavior: smooth;
+        margin-right:10%;
+
+    }
+
+
+        .btn-custom:hover {
+            background-color: #16a085;
+        }
+</style>
+<div class="row">
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar">
+        <div class="list-group">
+            <button id="usersButton" type="button" class="btn" onclick="loadPage('Users')">Users</button>
+            <button id="productsButton" type="button" class="btn" onclick="loadPage('Products')">Products</button>
+            <button id="categoriesButton" type="button" class="btn" onclick="loadPage('Categories')">Categories</button>
+            <button id="ordersButton" type="button" class="btn" onclick="loadPage('Orders')">Orders</button>
+            <button id="rolesButton" type="button" class="btn" onclick="loadPage('Roles')">Roles</button>
+            <button id="addRoleButton" type="button" class="btn" onclick="loadPage('AddRole')">Add New Role</button>
+            <button id="createCategoryButton" type="button" class="btn" onclick="loadPage('CreateCategory')">Create Category</button>
+        </div>
+    </div>
+
+    <!-- Content Area -->
+    <div id="contentArea" class="col-md-9 col-lg-10">
+        <h1 class="page-title" id="pageTitle">Dashboard</h1>
+        <div id="dynamicContent">
+            <!-- Dynamic content will be loaded here -->
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function loadPage(page) {
+            fetch(`/Dashboard/${page}`)
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('dynamicContent').innerHTML = data;
+                    document.getElementById('pageTitle').innerText = page;
+                })
+                .catch(error => console.error('Error loading page:', error));
+        }
+    </script>
+}

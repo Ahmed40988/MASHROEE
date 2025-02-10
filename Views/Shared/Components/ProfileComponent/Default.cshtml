@@ -1,0 +1,72 @@
+﻿@model MASHROEE.ViewModel.ProfileViewModel
+
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<div class="container mt-5">
+    <div class="card shadow-lg border-0">
+        <div class="card-header bg-primary text-white text-center">
+            <h2>@Model.name's Profile</h2>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-4 text-center">
+                    <img src="@Model.imagurl" alt="Profile Picture" class="profile-image shadow">
+                </div>
+                <div class="col-md-8">
+                    <dl class="row">
+                        <dt class="col-sm-4 font-weight-bold">Username:</dt>
+                        <dd class="col-sm-8">@Model.username</dd>
+
+                        <dt class="col-sm-4 font-weight-bold">Full Name:</dt>
+                        <dd class="col-sm-8">@Model.name</dd>
+
+                        <dt class="col-sm-4 font-weight-bold">Email:</dt>
+                        <dd class="col-sm-8">@Model.Email</dd>
+
+                        <dt class="col-sm-4 font-weight-bold">Phone:</dt>
+                        <dd class="col-sm-8">@Model.Phone</dd>
+
+                        <dt class="col-sm-4 font-weight-bold">Roles</dt>
+                        <dd class="col-sm-8">
+                            <ul>
+                                @foreach (var role in Model.Roles)
+                                {
+                                    <li>@role</li>
+                                }
+                            </ul>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer text-center">
+            <a asp-action="EditProfile" class="btn btn-warning me-2">Edit Profile</a>
+            <a asp-action="index" asp-controller="Home" class="btn btn-secondary">Back to Home</a>
+        </div>
+    </div>
+</div>
+<style>
+    .profile-image {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        margin-bottom: 15px;
+        border: 5px solid #f8f9fa;
+    }
+
+    .card {
+        border-radius: 15px;
+    }
+
+    .btn {
+        padding: 10px 20px;
+    }
+
+    .btn-warning {
+        color: #fff;
+        background-color: #ffc107;
+        border-color: #ffc107;
+    }
+</style>

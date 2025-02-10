@@ -1,7 +1,9 @@
 ﻿using MASHROEE.IRepository;
 using MASHROEE.Models;
 using MASHROEE.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.DotNet.Scaffolding.Shared.Messaging;
 
 namespace MASHROEE.Controllers
 {
@@ -22,11 +24,13 @@ namespace MASHROEE.Controllers
                 Name = c.Name,
                 Description = c.Description,
                 ProductsCount = c.Products.Count()
-            });
+            }).OrderBy(c => c.ProductsCount).ToList();
+
             return View(list);
         }
 
         [HttpGet]
+        [Authorize(Roles ="admin")]
         public IActionResult Create()
         {
             return View();
@@ -36,17 +40,25 @@ namespace MASHROEE.Controllers
         {
             if (ModelState.IsValid)
             {
+                var listc = categoryRepository.GetAllCategorys();
+                if (listc.Any(c => c.Name == categoryViewModel.Name))
+                {
+                    TempData["CategoryExistsMessage"] = "Category is already added!";
+                    return View(categoryViewModel); 
+                }
+
                 var category = new Category()
                 {
                     Name = categoryViewModel.Name,
                     Description = categoryViewModel.Description,
                 };
                 categoryRepository.AddCategory(category);
-                return RedirectToAction("Index", "Category");
+                return RedirectToAction("Index", "DashBoard");
             }
             return View(categoryViewModel);
         }
         [HttpGet]
+        [Authorize(Roles = "admin")]
         public IActionResult Edit(int id)
         {
             var oldcategory=categoryRepository.GetCategoryById(id);
@@ -68,16 +80,24 @@ namespace MASHROEE.Controllers
                 category.Name = categoryViewModel.Name;
                 category.Description = categoryViewModel.Description;
                 categoryRepository.updatecategory(category);
-                return RedirectToAction("index");
+                return RedirectToAction("index","DashBoard");
              }
             return View(categoryViewModel);
         }
-
+        [Authorize(Roles = "admin")]
         public IActionResult Delete(int id,Category category)
         {
             categoryRepository.RemoveCategory(id);
-            return RedirectToAction("Index");
+            return RedirectToAction("Index","DashBoard");
         }
+
+        public IActionResult Filterbycategory(int id) 
+        {
+            var list =productRepository.GetallProductsbycategory(id);
+            var listmodel =productRepository.Maping(list);
+            return View(listmodel);
+        }
+
 
 
     }

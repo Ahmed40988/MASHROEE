@@ -1,0 +1,45 @@
+﻿@model List<OrderViewModel>
+
+@{
+    ViewData["Title"] = "Orders";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">All Orders</h2>
+
+    <table class="table table-bordered table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th>User</th>
+                <th>Items</th>
+                <th>Quantity</th>
+                <th>Total Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Model)
+            {
+                <tr>
+                    <td>@order.UserName</td>
+                    <td>
+                        <ul>
+                            @foreach (var item in order.cartitems)
+                            {
+                                <li>@item.ProductName (Qty: @item.Quantity)</li>
+                            }
+                        </ul>
+                    </td>
+                    <td>@order.Quantity</td>
+                    <td>@order.TotalPrice.ToString("C")</td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="7" class="text-center fw-bold" style="background-color: #1abc9c; color: #fff; padding: 15px;">
+                    Total Orders: @Model.Count() Order(s)
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>

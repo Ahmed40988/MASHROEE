@@ -1,0 +1,53 @@
+﻿@model IEnumerable<MASHROEE.ViewModel.CategoryViewModel>
+
+@{
+    ViewData["Title"] = "Categories";
+}
+
+<div class="container-fluid mt-4">
+    <h2 class="text-center text-light mb-4">Category Management</h2>
+
+    <p>
+        <a asp-action="Create" class="btn btn-custom">Create New</a>
+    </p>
+
+    <div class="row justify-content-center">
+        <div class="col-12">
+            <table class="table table-bordered table-dark table-striped table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th class="text-center">@Html.DisplayNameFor(model => model.Id)</th>
+                        <th class="text-center">@Html.DisplayNameFor(model => model.Name)</th>
+                        <th class="text-center">@Html.DisplayNameFor(model => model.Description)</th>
+                        <th class="text-center">@Html.DisplayNameFor(model => model.ProductsCount)</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="text-center">@Html.DisplayFor(modelItem => item.Id)</td>
+                            <td class="text-center">@Html.DisplayFor(modelItem => item.Name)</td>
+                            <td class="text-center">@Html.DisplayFor(modelItem => item.Description)</td>
+                            <td class="text-center">@Html.DisplayFor(modelItem => item.ProductsCount)</td>
+                            <td class="text-center">
+                                <div class="btn-group" role="group">
+                                    <a href="@Url.Action("Edit", "Category", new { id = item.Id })" class="btn btn-sm btn-outline-info me-2">Edit</a>
+                                    <a href="@Url.Action("Delete", "Category", new { id = item.Id })" class="btn btn-sm btn-outline-danger">Delete</a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="7" class="text-center fw-bold" style="background-color: #1abc9c; color: #fff; padding: 15px;">
+                            Total Categories: @Model.Count() Category(s)
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>

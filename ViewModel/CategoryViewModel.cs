@@ -2,6 +2,7 @@
 
 namespace MASHROEE.ViewModel
 {
+   
     public class CategoryViewModel
     {
             public int Id { get; set; }

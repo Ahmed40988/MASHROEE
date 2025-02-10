@@ -1,0 +1,49 @@
+﻿@model Product
+
+@{
+    ViewData["Title"] = Model.Name;
+}
+<link href="~/css/alert.css" rel="stylesheet" />
+
+<div class="row mt-5 justify-content-center">
+
+    <div class="col-lg-6 col-md-8">
+        <div class="card border-info mb-3" style="max-width: 30rem;">
+
+            <img src="@Model.image" class="card-img-top" alt="@Model.Name" style="height: 250px; object-fit: cover;">
+            <div class="card-body text-center">
+                <h5 class="card-title text-dark fw-bold">@Model.Name</h5>
+                <h4 class="text-success mb-3">@Model.Price $</h4>
+                <h4 class="text-success mb-3">Avaliable Quantity : @Model.Quantity</h4>
+
+                <p class="card-text text-muted">
+                    @Model.Description
+                </p>
+
+                @if (Model.category != null)
+                {
+                    <p class="card-text text-muted">
+                        <strong>Category:</strong> @Model.category.Name
+                    </p>
+                }
+                <div class="card-footer bg-transparent border-0 text-center">
+                    <form id="addto_cart" asp-action="AddToCart" asp-controller="Cart" asp-route-productid="@Model.Id" method="post" class="d-flex flex-column align-items-center">
+                        <label for="quantity-@Model.Id" class="me-2 text-muted">Quantity:</label>
+                        <div class="d-flex align-items-center">
+                            <button type="button" class="btn btn-outline-secondary btn-sm me-1" onclick="decreaseQuantity(@Model.Id, @Model.Price)">-</button>
+                            <input id="quantity-@Model.Id" name="quantity" type="number" min="1" value="1" class="form-control text-center" style="width: 60px;" oninput="updateTotalPrice(@Model.Id, @Model.Price)" />
+                            <button type="button" class="btn btn-outline-secondary btn-sm ms-1" onclick="increaseQuantity(@Model.Id, @Model.Price)">+</button>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-sm mt-2 add-to-cart-btn">Add To Cart</button>
+
+                    </form>
+
+                    <p class="text-center text-success fw-bold">Total Price: <span id="total-price-@Model.Id">@Model.Price $</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="~/js/addtocart.js"></script>
+

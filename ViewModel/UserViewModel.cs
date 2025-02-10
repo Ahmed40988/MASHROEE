@@ -4,6 +4,7 @@ namespace MASHROEE.ViewModel
 {
     public class UserViewModel
     {
+        public string id { get; set; }
         public string fullname { get; set; }
         public string UserName { get; set; }
         public string Email { get; set; }
@@ -11,11 +12,7 @@ namespace MASHROEE.ViewModel
         public string ?image { get; set; }
         public IList<string>? Roles  { get; set; }
 
-       public ICollection<Product> products { get; set; } //as a supplier
-        
-      //  public List<Product> orders { get; set; } //as a buer
-
-
+       public ICollection<Product> ?products { get; set; } 
 
     }
 }

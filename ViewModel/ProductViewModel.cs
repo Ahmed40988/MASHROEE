@@ -16,6 +16,8 @@ namespace MASHROEE.ViewModel
         public decimal Price { get; set; }
         public DateTime CreatedDate { get; set; }
         public string ?image {  get; set; }
+        public string ?username {  get; set; }
+        public int? Quantity { get; set; }
 
     }
 }

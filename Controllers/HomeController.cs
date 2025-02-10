@@ -21,7 +21,11 @@ namespace MASHROEE.Controllers
 
         public IActionResult Index()
         {
-            var list = productRepository.GetAllProducts();
+			if (TempData["LoginSuccess"] != null)
+			{
+				TempData.Keep("LoginSuccess"); 
+			}
+			var list = productRepository.GetAllProducts();
             var listmodel = new List<ProductViewModel>();
             foreach (var item in list)
             {

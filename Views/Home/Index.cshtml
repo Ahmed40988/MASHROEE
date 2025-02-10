@@ -3,10 +3,17 @@
 @{
     ViewData["Title"] = "Index";
 }
-<a asp-action="Create" class="btn btn-outline-warning btn-lg">
-    Create New
-    <i class="bi bi-patch-plus btn-lg"></i>
-</a>
+<link href="~/css/indexhome.css" rel="stylesheet" />
+<link href="~/css/alert.css" rel="stylesheet" />
+<script src="~/js/indexhome.js"></script>
+
+@if ( User.IsInRole("Supplier"))
+{
+    <a asp-controller="Product" asp-action="Create" class="btn btn-outline-warning btn-lg mb-4">
+        Create New
+        <i class="bi bi-patch-plus btn-lg"></i>
+    </a>
+}
 
 @if (Model == null || !Model.Any())
 {
@@ -17,14 +24,13 @@
 }
 else
 {
-    <div class="row mt-5">
+    <div class="row mt-4" id="product-list">
         @foreach (var Product in Model)
         {
-            <div class="col-lg-4 col-md-6">
-                <a asp-action="Details" asp-route-id="@Product.Id" class="text-decoration-none">
-                    <div class="card border-info mb-3" style="max-width: 20rem;">
-                        <img src="@Product.image" class="card-img-top" alt="@Product.Name" style="height: 180px; object-fit: cover;">
-
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card product-card h-100 border-0 shadow-sm">
+                    <a asp-action="Details" asp-controller="Product" asp-route-id="@Product.Id" class="text-decoration-none">
+                        <img src="@Product.image" class="card-img-top" alt="@Product.Name" style="height: 200px; object-fit: cover;">
                         <div class="card-body text-center">
                             <h5 class="card-title text-dark fw-bold">@Product.Name</h5>
                             <h4 class="text-success">@Product.Price $</h4>
@@ -33,19 +39,65 @@ else
                                 {
                                     @Product.Description.Substring(0, 50)
                                     <span>....</span>
-
                                 }
                                 else
                                 {
                                     @Product.Description
                                 }
                             </p>
-                            <button type="button" class="btn btn-light">BUY</button>
                         </div>
+                    </a>
+                    <div class="card-footer bg-transparent border-0 text-center">
+                        <form id="addto_cart" asp-action="AddToCart" asp-controller="Cart" asp-route-productid="@Product.Id" method="post" class="d-flex flex-column align-items-center">
+                            <label for="quantity-@Product.Id" class="me-2 text-muted">Quantity:</label>
+                            <div class="d-flex align-items-center">
+                                <button type="button" class="btn btn-outline-secondary btn-sm me-1" onclick="decreaseQuantity(@Product.Id, @Product.Price)">-</button>
+                                <input id="quantity-@Product.Id" name="quantity" type="number" min="1" value="1" class="form-control text-center" style="width: 60px;" oninput="updateTotalPrice(@Product.Id, @Product.Price)" />
+                                <button type="button" class="btn btn-outline-secondary btn-sm ms-1" onclick="increaseQuantity(@Product.Id, @Product.Price)">+</button>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-sm mt-2 add-to-cart-btn">Add To Cart</button>
+
+                        </form>
+
+                        <p class="text-center text-success fw-bold">Total Price: <span id="total-price-@Product.Id">@Product.Price $</span></p>
                     </div>
-                </a>
+                </div>
             </div>
         }
     </div>
-
 }
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="~/js/addtocart.js"></script>
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let loginSuccessMessage = '@TempData["LoginSuccess"]';
+
+            if (loginSuccessMessage && sessionStorage.getItem("hideLoginAlert") !== "true") {
+                Swal.fire({
+                    title: "Success!",
+                    text: loginSuccessMessage,
+                    icon: "success",
+                    confirmButtonColor: "#FFC300"
+                }).then(() => {
+                    sessionStorage.setItem("hideLoginAlert", "true");
+                });
+            }
+
+    
+            @if (TempData["LoginSuccess"] != null)
+            {
+                <text>
+                    @TempData.Remove("LoginSuccess");
+                </text>
+            }
+        });
+    </script>
+}
+
+
+
+

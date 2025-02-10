@@ -11,9 +11,11 @@
         </div>
         <div class="card-body">
             <div class="row">
+                <!-- صورة البروفايل -->
                 <div class="col-md-4 text-center">
                     <img src="@Model.imagurl" alt="Profile Picture" class="profile-image shadow">
                 </div>
+                <!-- تفاصيل البروفايل -->
                 <div class="col-md-8">
                     <dl class="row">
                         <dt class="col-sm-4 font-weight-bold">Username:</dt>
@@ -28,24 +30,28 @@
                         <dt class="col-sm-4 font-weight-bold">Phone:</dt>
                         <dd class="col-sm-8">@Model.Phone</dd>
 
-                        <dt class="col-sm-4 font-weight-bold">Roles</dt>
+                        <dt class="col-sm-4 font-weight-bold">Roles:</dt>
                         <dd class="col-sm-8">
-                        <ul>
-                            @foreach(var role in Model.Roles)
-                            {
-                            <li>@role</li>
-                            }
-                        </ul></dd>
+                            <ul>
+                                @foreach (var role in Model.Roles)
+                                {
+                                    <li>@role</li>
+                                }
+                            </ul>
+                        </dd>
                     </dl>
                 </div>
             </div>
         </div>
+        <!-- أزرار التحرير والعودة للصفحة الرئيسية -->
         <div class="card-footer text-center">
             <a asp-action="EditProfile" class="btn btn-warning me-2">Edit Profile</a>
             <a asp-action="index" asp-controller="Home" class="btn btn-secondary">Back to Home</a>
         </div>
     </div>
 </div>
+
+<!-- التنسيقات -->
 <style>
     .profile-image {
         width: 150px;
