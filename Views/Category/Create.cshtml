@@ -37,3 +37,21 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let categoryExistsMessage = '@TempData["CategoryExistsMessage"]';
+
+        if (categoryExistsMessage) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: categoryExistsMessage,
+                confirmButtonText: 'OK',
+                customClass: {
+                    popup: 'swal-custom-popup',
+                    title: 'swal-custom-title',
+                    confirmButton: 'swal-custom-button'
+                }
+            });
+        }
+    });</script>

@@ -22,9 +22,8 @@ namespace MASHROEE.Repository
         public IEnumerable<SelectListItem> Getselectlist()
         {
             return context.Category.Select(c => new SelectListItem
-                { Value = c.Name.ToString(), Text = c.Name })
-                .OrderBy(c => c.Text)
-                .ToList();
+            { Value = c.Name.ToString(), Text = c.Name })
+                .ToList().OrderBy(c => c.Text);
         }
 
         public Category GetCategoryById(int id)

@@ -1,0 +1,88 @@
+﻿@model IEnumerable<MASHROEE.ViewModel.UserViewModel>
+
+@{
+    ViewData["Title"] = "Users";
+}
+
+<div class="container-fluid mt-4">
+    <h2 class="text-center text-light mb-4">User Management</h2>
+
+    <div class="row justify-content-center">
+        <div class="col-12">
+            <table class="table table-bordered table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th class="text-center">Image</th>
+                        <th class="text-center">Username</th>
+                        <th class="text-center">Name</th>
+                        <th class="text-center">Email</th>
+                        <th class="text-center">Phone</th>
+                        <th class="text-center">Roles</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var user in Model)
+                    {
+                        <tr>
+                            <td class="text-center">
+                                @if (!string.IsNullOrEmpty(user.image))
+                                {
+                                    <img src="@user.image" alt="User Image" class="img-thumbnail w-100 h-100" />
+
+                                }
+                                else
+                                {
+                                    <span class="text-muted">No Image</span>
+                                }
+                            </td>
+                            <td class="text-center">@user.UserName</td>
+                            <td class="text-center">@user.fullname</td>
+                            <td class="text-center">@user.Email</td>
+                            <td class="text-center">@user.phone</td>
+                            <td class="text-center">
+                                <ul class="list-unstyled mb-0">
+                                    @foreach (var role in user.Roles)
+                                    {
+                                        <li>@role</li>
+                                    }
+                                </ul>
+                            </td>
+                            <td class="text-center">
+                                <div class="btn-group" role="group">
+                                    <a asp-action="Update" asp-controller="User" asp-route-id="@user.id" class="btn btn-sm btn-outline-info me-2">
+                                        ✏️ Edit
+                                    </a>
+                                    <a asp-action="Delete" asp-controller="User" asp-route-username="@user.UserName" class="btn btn-sm btn-outline-danger me-2">
+                                        🗑️ Delete
+                                    </a>
+
+                                    <div class="dropdown">
+                                        <button class="btn btn-sm btn-outline-warning dropdown-toggle" type="button" id="roleActionsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                            🎭 Roles
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="roleActionsDropdown">
+                                            <li>
+                                                <a class="dropdown-item" asp-action="addrole_forUser" asp-controller="User" asp-route-username="@user.UserName">➕ Add Role</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" asp-action="deleterole_fromUser" asp-controller="User" asp-route-username="@user.UserName">🗑️ Delete Role</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="7" class="text-center fw-bold" style="background-color: #1abc9c; color: #fff; padding: 15px;">
+                            Total Users: @Model.Count() User(s)
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>

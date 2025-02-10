@@ -1,0 +1,38 @@
+﻿@model IEnumerable<MASHROEE.ViewModel.RoleViewModel>
+
+<div class="justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold">Product Dashboard</h2>
+    <a asp-controller="Role" asp-action="AddRole" class="btn btn-primary ">Create New Role</a>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.RoleName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoleName)
+            </td>
+            <td>
+                <div class="btn-group" role="group">
+                        <a asp-controller="Role" asp-action="DeleteRole" asp-route-rolename="@item.RoleName" class="btn btn-sm btn-danger delete-btn">Delete</a>
+
+                </div>
+            </td>
+        </tr>
+}
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="7" class="text-center fw-bold" style="background-color: #1abc9c; color: #fff; padding: 15px;">
+                Total Roles: @Model.Count() Role(s)
+            </td>
+        </tr>
+    </tfoot>
+</table>

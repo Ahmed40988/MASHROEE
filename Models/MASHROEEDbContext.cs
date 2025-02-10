@@ -5,10 +5,16 @@ namespace MASHROEE.Models
 {
     public class MASHROEEDbContext:IdentityDbContext<Applicationuser>
     {
-  
+        public MASHROEEDbContext()
+        {
+        }
+
         public MASHROEEDbContext(DbContextOptions<MASHROEEDbContext> options) : base(options) { }
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Category { get; set; }
+        public DbSet<Cartitem> Cartitems { get; set; }
+        public DbSet<Cart> Cart { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder); // استدعاء إعدادات الـ Identity الافتراضية

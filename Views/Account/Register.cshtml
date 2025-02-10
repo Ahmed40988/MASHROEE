@@ -3,188 +3,133 @@
 @{
     ViewData["Title"] = "Register";
 }
-@* 
-<h1>Register</h1>
 
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Register" enctype="multipart/form-data" method="post">
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="username" class="control-label"></label>
-                <input asp-for="username" class="form-control" />
-                <span asp-validation-for="username" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Phone" class="control-label"></label>
-                <input asp-for="Phone" class="form-control" />
-                <span asp-validation-for="Phone" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="RoleName" class="control-label">register for a </label>
-                <fieldset>
-                    <select asp-for="RoleName">
-
-                        <option value="">Select Role</option>
-
-                        <option value="User">User</option>
-
-                        <option value="Supplier">Supplier</option>
-                    </select>
-                </fieldset>
-                <span asp-validation-for="RoleName" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="imagefromuser" class="control-label">Upload Image Profile</label>
-                <input asp-for ="imagefromuser" type="file" class="form-control" />
-                <span asp-validation-for="imagefromuser" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Gender" class="control-label"></label>
-            <fieldset>
-                <select asp-for="Gender">
-
-                    <option value="">Select Gender</option>
-
-                    <option value="M">Male</option>
-
-                    <option value="F">Famle</option>
-                </select>
-            </fieldset>
-                <span asp-validation-for="Gender" class="text-danger"></span>
-                </div>
-
-            <div class="form-group">
-                <input type="submit" value="Sign In" class="btn btn-primary" />
-                <a href="@Url.Action("Login","Account")" class=" accordion-button">LogIn</a>
-            </div>
-        </form>
-    </div>
-</div> *@
-
-<div class="container mt-5">
-    <div class="card shadow-lg">
-        <div class="card-header text-dark text-center" style="background: #FFC300;">
-            <h2>Join MASHROEE</h2>
+<div class="container-fluid mt-5 px-0">
+    <div class="card shadow-lg border-0 mx-auto" style="max-width: 600px;">
+        <div class="card-header text-white text-center py-4" style="background: linear-gradient(135deg, #FFC300, #FF8C00);">
+            <h2 class="mb-0">Join MASHROEE</h2>
         </div>
-        <div class="card-body">
+        <div class="card-body p-5">
             <form asp-action="Register" enctype="multipart/form-data" novalidate>
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                <!-- Username -->
-                <div class="form-group mb-3">
-                    <label asp-for="username" class="form-label"></label>
-                    <input asp-for="username" class="form-control" placeholder="Enter your username" required />
-                    <span asp-validation-for="username" class="text-danger"></span>
+                <div class="form-group mb-4">
+                    <label asp-for="username" class="form-label fw-bold">Username</label>
+                    <input asp-for="username" class="form-control form-control-lg" placeholder="Enter your username" required />
+                    <span asp-validation-for="username" class="text-danger small"></span>
                 </div>
 
-                <!-- Name -->
-                <div class="form-group mb-3">
-                    <label asp-for="Name" class="form-label"></label>
-                    <input asp-for="Name" class="form-control" placeholder="Enter your name" required />
-                    <span asp-validation-for="Name" class="text-danger"></span>
+                <div class="form-group mb-4">
+                    <label asp-for="Name" class="form-label fw-bold">Name</label>
+                    <input asp-for="Name" class="form-control form-control-lg" placeholder="Enter your name" required />
+                    <span asp-validation-for="Name" class="text-danger small"></span>
                 </div>
 
-                <!-- Email -->
-                <div class="form-group mb-3">
-                    <label asp-for="Email" class="form-label"></label>
-                    <input asp-for="Email" class="form-control" placeholder="Enter your email" required />
-                    <span asp-validation-for="Email" class="text-danger"></span>
+                <div class="form-group mb-4">
+                    <label asp-for="Email" class="form-label fw-bold">Email</label>
+                    <input asp-for="Email" class="form-control form-control-lg" placeholder="Enter your email" required />
+                    <span asp-validation-for="Email" class="text-danger small"></span>
                 </div>
 
-                <!-- Gender -->
-                <div class="form-group mb-3">
-                    <label asp-for="Gender" class="form-label"></label>
-                    <select asp-for="Gender" class="form-control" asp-items="@(new SelectList(new List<SelectListItem>
-                    {
-                        new SelectListItem { Text = "Select your gender", Value = "" },
-                        new SelectListItem { Text = "Male", Value = "M" },
-                        new SelectListItem { Text = "Female", Value = "F" }
-                    }, "Value", "Text"))" required>
+                <div class="form-group mb-4">
+                    <label asp-for="Gender" class="form-label fw-bold">Gender</label>
+                    <select asp-for="Gender" class="form-control form-control-lg" required>
+                        <option value="">Select your gender</option>
+                        <option value="M">Male</option>
+                        <option value="F">Female</option>
                     </select>
+                    <span asp-validation-for="Gender" class="text-danger small"></span>
                 </div>
 
-                <!-- Password -->
-                <div class="form-group mb-3">
-                    <label asp-for="Password" class="form-label"></label>
-                    <input asp-for="Password" class="form-control" placeholder="Enter your password" required />
-                    <span asp-validation-for="Password" class="text-danger"></span>
+                <div class="form-group mb-4">
+                    <label asp-for="Password" class="form-label fw-bold">Password</label>
+                    <input asp-for="Password" class="form-control form-control-lg" placeholder="Enter your password" required />
+                    <span asp-validation-for="Password" class="text-danger small"></span>
                 </div>
 
-                <!-- Phone -->
-                <div class="form-group mb-3">
-                    <label asp-for="Phone" class="form-label"></label>
-                    <input asp-for="Phone" class="form-control" placeholder="Enter your phone number" required />
-                    <span asp-validation-for="Phone" class="text-danger"></span>
+                <div class="form-group mb-4">
+                    <label asp-for="Phone" class="form-label fw-bold">Phone</label>
+                    <input asp-for="Phone" class="form-control form-control-lg" placeholder="Enter your phone number" required />
+                    <span asp-validation-for="Phone" class="text-danger small"></span>
                 </div>
 
-                <!-- Image URL -->
-                <div class="form-group mb-3">
-                    <label asp-for="imagefromuser" class="form-label"></label>
-                    <input asp-for="imagefromuser" type="file" class="form-control" required />
-                    <span asp-validation-for="imagefromuser" class="text-danger"></span>
-                </div>
-                <!-- Role Name -->
-                <div class="form-group">
-                    <label asp-for="RoleName" class="control-label">register for a </label>
-                    <fieldset>
-                        <select asp-for="RoleName">
-
-                            <option value="">Select Role</option>
-
-                            <option value="User">User</option>
-
-                            <option value="Supplier">Supplier</option>
-                        </select>
-                    </fieldset>
-                    <span asp-validation-for="RoleName" class="text-danger"></span>
+                <div class="form-group mb-4">
+                    <label asp-for="imagefromuser" class="form-label fw-bold">Profile Image</label>
+                    <input asp-for="imagefromuser" type="file" class="form-control form-control-lg" required />
+                    <span asp-validation-for="imagefromuser" class="text-danger small"></span>
                 </div>
 
-                <!-- Submit Button -->
-                <div class="d-grid">
-                    <input type="submit" value="Create" class="btn btn-custom" />
-                    <a href="@Url.Action("Login","Account")" class=" accordion-button">LogIn</a>
+                <div class="form-group mb-4">
+                    <label asp-for="RoleName" class="form-label fw-bold">Register as</label>
+                    <select asp-for="RoleName" class="form-control form-control-lg" required>
+                        <option value="">Select Role</option>
+                        <option value="User">User</option>
+                        <option value="Supplier">Supplier</option>
+                    </select>
+                    <span asp-validation-for="RoleName" class="text-danger small"></span>
+                </div>
+
+                <div class="d-grid gap-3">
+                    <input type="submit" value="Create Account" class="btn btn-custom btn-lg fw-bold" />
+                    <a href="@Url.Action("Login","Account")" class="btn btn-outline-custom btn-lg fw-bold">Already have an account? Log In</a>
                 </div>
             </form>
-        </div>
-        <div class="card-footer text-center">
-            <a asp-action="Index" class="btn btn-link">Back to List</a>
         </div>
     </div>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
-<!-- CSS Styles -->
+
 <style>
     .btn-custom {
-        background-color: #FFC300;
-        border-color: #FFC300;
-        color: #3D464D !important;
-        border-radius: 6px;
-        transition: background-color 0.3s ease;
+        background: linear-gradient(135deg, #FFC300, #FF8C00);
+        border: none;
+        color: white;
+        border-radius: 8px;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
         .btn-custom:hover {
-            background-color: #c99a96;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 140, 0, 0.4);
         }
+
+    .btn-outline-custom {
+        border: 2px solid #FFC300;
+        color: #FFC300;
+        border-radius: 8px;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+        .btn-outline-custom:hover {
+            background-color: #FFC300;
+            color: white;
+        }
+
+    .card {
+        border-radius: 15px;
+        overflow: hidden;
+    }
+
+    .form-control-lg {
+        border-radius: 8px;
+        padding: 12px 16px;
+    }
+
+    .form-label {
+        font-size: 1.1rem;
+        color: #333;
+    }
+
+    .card-header {
+        border-radius: 15px 15px 0 0;
+    }
+
+    .card-footer {
+        border-radius: 0 0 15px 15px;
+    }
 </style>

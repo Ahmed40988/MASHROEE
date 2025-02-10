@@ -62,7 +62,8 @@ namespace MASHROEE.Controllers
                 {
                     await userManager.AddToRoleAsync(user, uservm.RoleName);
                     await signInManager.SignInAsync(user, false);
-                    return RedirectToAction("Index", "Home");
+					TempData["LoginSuccess"] = "Sign in successful! Welcome to MASHROEE.";
+					return RedirectToAction("Index", "Home");
                 }
                 else
                 {
@@ -93,7 +94,8 @@ namespace MASHROEE.Controllers
                     if (found)
                     {
                         await signInManager.SignInAsync(user, uservm.RememberMe);
-                        return RedirectToAction("Index", "Home");
+						TempData["LoginSuccess"] = "Login successful! Welcome to MASHROEE.";
+						return RedirectToAction("Index", "Home");
                     }
                     else
                     {
@@ -106,13 +108,13 @@ namespace MASHROEE.Controllers
                 return View(uservm);
         }
         [Authorize]
-        public async Task<IActionResult >Logout()
+        public async Task<IActionResult> Logout()
         {
-           await signInManager.SignOutAsync();
-           return RedirectToAction("Login");
-
-            return View();
+            await signInManager.SignOutAsync();
+            TempData["LogoutSuccess"] = "Log Out successful!";
+            return RedirectToAction("Login");
         }
+
         [Authorize]
          public async Task<IActionResult> Profile()
          {

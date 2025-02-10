@@ -5,6 +5,18 @@
       "PackagePath": "staticwebassets\\MASHROEE.bundle.scp.css"
     },
     {
+      "Id": "D:\\courses\\back end.net\\projects\\MASHROEE\\wwwroot\\css\\Alert.css",
+      "PackagePath": "staticwebassets\\css\\Alert.css"
+    },
+    {
+      "Id": "D:\\courses\\back end.net\\projects\\MASHROEE\\wwwroot\\css\\Cartitems.css",
+      "PackagePath": "staticwebassets\\css\\Cartitems.css"
+    },
+    {
+      "Id": "D:\\courses\\back end.net\\projects\\MASHROEE\\wwwroot\\css\\IndexHome.css",
+      "PackagePath": "staticwebassets\\css\\IndexHome.css"
+    },
+    {
       "Id": "D:\\courses\\back end.net\\projects\\MASHROEE\\wwwroot\\css\\bootstrap.min .css",
       "PackagePath": "staticwebassets\\css\\bootstrap.min .css"
     },
@@ -51,6 +63,10 @@
     {
       "Id": "D:\\courses\\back end.net\\projects\\MASHROEE\\wwwroot\\images\\16.jpg",
       "PackagePath": "staticwebassets\\images\\16.jpg"
+    },
+    {
+      "Id": "D:\\courses\\back end.net\\projects\\MASHROEE\\wwwroot\\images\\1684923575771.png",
+      "PackagePath": "staticwebassets\\images\\1684923575771.png"
     },
     {
       "Id": "D:\\courses\\back end.net\\projects\\MASHROEE\\wwwroot\\images\\17.jpg",
@@ -127,6 +143,50 @@
     {
       "Id": "D:\\courses\\back end.net\\projects\\MASHROEE\\wwwroot\\images\\9.jpg",
       "PackagePath": "staticwebassets\\images\\9.jpg"
+    },
+    {
+      "Id": "D:\\courses\\back end.net\\projects\\MASHROEE\\wwwroot\\images\\IMG-20231022-WA0089.jpg",
+      "PackagePath": "staticwebassets\\images\\IMG-20231022-WA0089.jpg"
+    },
+    {
+      "Id": "D:\\courses\\back end.net\\projects\\MASHROEE\\wwwroot\\images\\Screenshot 2025-02-07 191306.png",
+      "PackagePath": "staticwebassets\\images\\Screenshot 2025-02-07 191306.png"
+    },
+    {
+      "Id": "D:\\courses\\back end.net\\projects\\MASHROEE\\wwwroot\\images\\WhatsApp Image 2024-10-06 at 02.42.05_ba36a9b4.jpg",
+      "PackagePath": "staticwebassets\\images\\WhatsApp Image 2024-10-06 at 02.42.05_ba36a9b4.jpg"
+    },
+    {
+      "Id": "D:\\courses\\back end.net\\projects\\MASHROEE\\wwwroot\\images\\simple-simple-background-minimalism-black-background-wallpaper-thumb.jpg",
+      "PackagePath": "staticwebassets\\images\\simple-simple-background-minimalism-black-background-wallpaper-thumb.jpg"
+    },
+    {
+      "Id": "D:\\courses\\back end.net\\projects\\MASHROEE\\wwwroot\\images\\skull-minimalism-pgc-gray-wallpaper-thumb.jpg",
+      "PackagePath": "staticwebassets\\images\\skull-minimalism-pgc-gray-wallpaper-thumb.jpg"
+    },
+    {
+      "Id": "D:\\courses\\back end.net\\projects\\MASHROEE\\wwwroot\\images\\٢٠٢٣٠٤١٧٢٢٣٥٥٣_1T6A1420.JPG",
+      "PackagePath": "staticwebassets\\images\\٢٠٢٣٠٤١٧٢٢٣٥٥٣_1T6A1420.JPG"
+    },
+    {
+      "Id": "D:\\courses\\back end.net\\projects\\MASHROEE\\wwwroot\\js\\Addtocart.js",
+      "PackagePath": "staticwebassets\\js\\Addtocart.js"
+    },
+    {
+      "Id": "D:\\courses\\back end.net\\projects\\MASHROEE\\wwwroot\\js\\Cart.js",
+      "PackagePath": "staticwebassets\\js\\Cart.js"
+    },
+    {
+      "Id": "D:\\courses\\back end.net\\projects\\MASHROEE\\wwwroot\\js\\Dashboard.js",
+      "PackagePath": "staticwebassets\\js\\Dashboard.js"
+    },
+    {
+      "Id": "D:\\courses\\back end.net\\projects\\MASHROEE\\wwwroot\\js\\IndexHome.js",
+      "PackagePath": "staticwebassets\\js\\IndexHome.js"
+    },
+    {
+      "Id": "D:\\courses\\back end.net\\projects\\MASHROEE\\wwwroot\\js\\Search.js",
+      "PackagePath": "staticwebassets\\js\\Search.js"
     },
     {
       "Id": "D:\\courses\\back end.net\\projects\\MASHROEE\\wwwroot\\js\\main.js",
@@ -8639,6 +8699,34 @@
     {
       "Id": "D:\\courses\\back end.net\\projects\\MASHROEE\\wwwroot\\lib\\owlcarousel\\owl.carousel.min.js",
       "PackagePath": "staticwebassets\\lib\\owlcarousel\\owl.carousel.min.js"
+    },
+    {
+      "Id": "D:\\courses\\back end.net\\projects\\MASHROEE\\wwwroot\\lib\\sweetalert2\\sweetalert2.all.js",
+      "PackagePath": "staticwebassets\\lib\\sweetalert2\\sweetalert2.all.js"
+    },
+    {
+      "Id": "D:\\courses\\back end.net\\projects\\MASHROEE\\wwwroot\\lib\\sweetalert2\\sweetalert2.all.min.js",
+      "PackagePath": "staticwebassets\\lib\\sweetalert2\\sweetalert2.all.min.js"
+    },
+    {
+      "Id": "D:\\courses\\back end.net\\projects\\MASHROEE\\wwwroot\\lib\\sweetalert2\\sweetalert2.css",
+      "PackagePath": "staticwebassets\\lib\\sweetalert2\\sweetalert2.css"
+    },
+    {
+      "Id": "D:\\courses\\back end.net\\projects\\MASHROEE\\wwwroot\\lib\\sweetalert2\\sweetalert2.d.ts",
+      "PackagePath": "staticwebassets\\lib\\sweetalert2\\sweetalert2.d.ts"
+    },
+    {
+      "Id": "D:\\courses\\back end.net\\projects\\MASHROEE\\wwwroot\\lib\\sweetalert2\\sweetalert2.js",
+      "PackagePath": "staticwebassets\\lib\\sweetalert2\\sweetalert2.js"
+    },
+    {
+      "Id": "D:\\courses\\back end.net\\projects\\MASHROEE\\wwwroot\\lib\\sweetalert2\\sweetalert2.min.css",
+      "PackagePath": "staticwebassets\\lib\\sweetalert2\\sweetalert2.min.css"
+    },
+    {
+      "Id": "D:\\courses\\back end.net\\projects\\MASHROEE\\wwwroot\\lib\\sweetalert2\\sweetalert2.min.js",
+      "PackagePath": "staticwebassets\\lib\\sweetalert2\\sweetalert2.min.js"
     },
     {
       "Id": "D:\\courses\\back end.net\\projects\\MASHROEE\\wwwroot\\mail\\contact.js",

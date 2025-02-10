@@ -1,10 +1,12 @@
 ﻿using MASHROEE.Models;
 using MASHROEE.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MASHROEE.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class RoleController : Controller
     {
         private readonly RoleManager<IdentityRole> roleManager;
@@ -45,13 +47,13 @@ namespace MASHROEE.Controllers
                 {
                     IdentityResult result = await roleManager.CreateAsync(role);
                     if (result.Succeeded)
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("Index", "DashBoard");
                     else
                     {
                         foreach (var error in result.Errors)
-                            ModelState.AddModelError("", error.Description);
+                         ModelState.AddModelError("", error.Description);
                     }
-                    return RedirectToAction("index", "Home");
+                    return RedirectToAction("index", "DashBoard");
                 }
                 else
                 {
@@ -70,7 +72,7 @@ namespace MASHROEE.Controllers
             }
          IdentityResult res= await  roleManager.DeleteAsync( rolefDb);
             if (res.Succeeded)
-                return RedirectToAction("index");
+                return RedirectToAction("index", "DashBoard");
             else
                 return Content("Error! role is not Deleted!");
         }

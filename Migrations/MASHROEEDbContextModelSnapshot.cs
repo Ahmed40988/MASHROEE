@@ -98,6 +98,60 @@ namespace MASHROEE.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("MASHROEE.Models.Cart", b =>
+                {
+                    b.Property<int>("CartId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CartId"));
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CartId");
+
+                    b.ToTable("Cart", (string)null);
+                });
+
+            modelBuilder.Entity("MASHROEE.Models.Cartitem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CartId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ProductName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<string>("image")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CartId");
+
+                    b.ToTable("Cartitems", (string)null);
+                });
+
             modelBuilder.Entity("MASHROEE.Models.Category", b =>
                 {
                     b.Property<int>("Id")
@@ -116,7 +170,7 @@ namespace MASHROEE.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Category");
+                    b.ToTable("Category", (string)null);
                 });
 
             modelBuilder.Entity("MASHROEE.Models.Product", b =>
@@ -144,6 +198,9 @@ namespace MASHROEE.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<int?>("Quantity")
+                        .HasColumnType("int");
+
                     b.Property<int?>("categoryid")
                         .HasColumnType("int");
 
@@ -161,7 +218,7 @@ namespace MASHROEE.Migrations
 
                     b.HasIndex("userid");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -297,6 +354,17 @@ namespace MASHROEE.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("MASHROEE.Models.Cartitem", b =>
+                {
+                    b.HasOne("MASHROEE.Models.Cart", "Cart")
+                        .WithMany("CartItems")
+                        .HasForeignKey("CartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Cart");
+                });
+
             modelBuilder.Entity("MASHROEE.Models.Product", b =>
                 {
                     b.HasOne("MASHROEE.Models.Applicationuser", null)
@@ -372,6 +440,11 @@ namespace MASHROEE.Migrations
             modelBuilder.Entity("MASHROEE.Models.Applicationuser", b =>
                 {
                     b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("MASHROEE.Models.Cart", b =>
+                {
+                    b.Navigation("CartItems");
                 });
 
             modelBuilder.Entity("MASHROEE.Models.Category", b =>

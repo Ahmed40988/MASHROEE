@@ -7,55 +7,178 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="/favicon.png">
-	<link href="~/lib/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
-	<link href="~/lib/bootstrap-icons/font/bootstrap-icons.min.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap-icons/font/bootstrap-icons.min.css" rel="stylesheet" />
+    <link href="~/css/style.min.css" rel="stylesheet" />
+    <link href="~/css/style.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/bootstrap.min .css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link href="~/lib/sweetalert2/sweetalert2.css" rel="stylesheet" />
+    <link href="~/lib/sweetalert2/sweetalert2.min.css" rel="stylesheet" />
+    <link href="~/css/alert.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/WebApplication4.styles.css" asp-append-version="true" />
 </head>
 
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg mb-3 bg-light" data-bs-theme="light"> 
+        <nav class="navbar navbar-expand-lg fixed-top mb-3 bg-light" data-bs-theme="light">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="index">MASHROEE</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                <div class="collapse navbar-collapse" id="navbarColor03">
+                    <!-- Links Section -->
+                    <ul class="navbar-nav me-auto">
+                        @if (User.IsInRole("Supplier"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="MyProducts">My Products</a>
+                            </li>
+                        }
+                        @await Component.InvokeAsync("CategoryComponent")
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="index">Products</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="index">Orders</a>
                         </li>
-                            @if(User.IsInRole("admin"))
-                            {
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="DashBoard" asp-action="index">DashBoard</a>
-                        </li>
-                            }
+                        @if (User.IsInRole("admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="DashBoard" asp-action="index">DashBoard</a>
+                            </li>
+                        }
                     </ul>
+                    @using (Html.BeginForm("Search", "Product", FormMethod.Get, new { @class = "search-form", id = "searchForm" }))
+                    {
+                        <div style="display: flex; align-items: center;">
+                            @Html.TextBox("searchValue", null, new { @class = "form-control", placeholder = "Enter Search Value", style = "width: 300px; margin-right: 10px;" })
+
+                            <div style="margin-right: 10px;">
+                                @Html.DropDownList("searchBy", new List<SelectListItem>
+                            {
+                            new SelectListItem { Text = "Select Way to Search", Value = "", Disabled = true, Selected = true },
+                            new SelectListItem { Text = "Product Name", Value = "productname" },
+                            new SelectListItem { Text = "Price", Value = "price" }
+                            }, new { @class = "form-select", id = "searchByDropdown", style = "width: 200px;" })
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Search</button>
+                        </div>
+  
+                    }
+
+
+                    <!-- Account Section -->
+                    <div class="dropdown ms-3">
+                        <a class="nav-link dropdown-toggle btn btn-lg px-4 py-2 rounded-2" data-bs-toggle="dropdown" href="#" role="button"
+                           aria-haspopup="true" aria-expanded="false" id="accountButton"> Account</a>
+                        <div class="dropdown-menu dropdown-menu-end">
+                            @if (!User.Identity.IsAuthenticated)
+                            {
+                                <button class="dropdown-item" type="button" onclick="location.href='@Url.Action("Login", "Account")'">Login</button>
+                                <button class="dropdown-item" type="button" onclick="location.href='@Url.Action("Register", "Account")'">Register</button>
+                            }
+                            else
+                            {
+                            
+                              <button class="dropdown-item" type="button" onclick="location.href='@Url.Action("Profile", "Account")'">My Profile</button> 
+                                <button class="dropdown-item" type="button" onclick="location.href='@Url.Action("Logout", "Account")'">Logout</button>
+                            }
+                        </div>
+                    </div>
                 </div>
             </div>
         </nav>
     </header>
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
+  @if (!ViewData["HideFooter"]?.Equals(true) ?? true)
+{
+  
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2024 - MASHROEE - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <footer class="footer mt-auto py-4 border-top">
+        <div class="container text-center">
+            <div class="row">
+                <div class="col-md-6 mb-3 mb-md-0">
+                    <span class="footer-text">&copy; 2023 MASHROEE. All rights reserved.</span>
+                </div>
+                <div class="col-md-6">
+                    <a href="#" class=" footer-text text-decoration-nonefooter-text me-3">Privacy Policy</a>
+                    <a href="#" class=" footer-text text-decoration-nonefooter-text">Terms of Service</a>
+                </div>
+            </div>
         </div>
     </footer>
+    }
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/sweetalert2/sweetalert2.all.js"></script>
+    <script src="~/lib/sweetalert2/sweetalert2.all.min.js"></script>
+    <script src="~/lib/sweetalert2/sweetalert2.js"></script>
+    <script src="~/lib/sweetalert2/sweetalert2.min.js"></script>
+    <script src="~/js/Search.js"></script>
+  
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+
+
+<style>
+    .dropdown-menu {
+        min-width: 150px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .form-control {
+        max-width: 500px;
+    }
+
+    #profileButton {
+        background-color: #007bff;
+        color: white;
+        border: none;
+    }
+
+        #profileButton:hover {
+            background-color: #0056b3;
+        }
+
+
+
+    .footer {
+        background-color: #1ba2f6;
+        border-top: 1px solid #e9ecef; 
+        padding: 20px 0; 
+        margin-top: 40px;
+    }
+  .footer-text {
+    color: #000000;
+    font-size: 18px; 
+    font-weight: 500; 
+    text-align: center; 
+    padding: 10px 0;
+    line-height: 1.6;
+}
+
+
+        .footer a {
+        color: #000000;
+
+
+
+        }
+
+            .footer a:hover {
+                color: #0d6efd; 
+                text-decoration: none; 
+               font-size: 23px; 
+            }
+</style>

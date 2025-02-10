@@ -1,11 +1,13 @@
 ﻿using MASHROEE.Models;
 using MASHROEE.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using NuGet.Versioning;
 
 namespace MASHROEE.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class UserController : Controller
     {
         private readonly UserManager<Applicationuser> userManager;
@@ -16,15 +18,16 @@ namespace MASHROEE.Controllers
             this.roleManager = roleManager;
         }
         [HttpGet]
-        public async Task<IActionResult> Update(string username)
+        public async Task<IActionResult> Update(string id)
         {
-            var userFDb = await userManager.FindByNameAsync(username);
+            var userFDb = await userManager.FindByIdAsync(id);
             if (userFDb == null)
             {
                 return NotFound("user not found");
             }
             UserViewModel uservm = new UserViewModel()
             {
+                id = userFDb.Id,
                 fullname = userFDb.Name,
                 UserName = userFDb.UserName,
                 phone = userFDb.PhoneNumber,
@@ -34,11 +37,11 @@ namespace MASHROEE.Controllers
             return View(uservm);
         }
         [HttpPost]
-        public async Task<IActionResult> Update(UserViewModel newuser,string username, IFormFile? image)
+        public async Task<IActionResult> Update(UserViewModel newuser,string id, IFormFile? image)
         {
             if (ModelState.IsValid)
             {
-                var userfDb = await userManager.FindByNameAsync(username);
+                var userfDb = await userManager.FindByIdAsync(id);
                 if (userfDb == null)
                 {
                     return NotFound("user not found");
@@ -65,7 +68,7 @@ namespace MASHROEE.Controllers
                 if (result.Succeeded)
                 {
                     TempData["Message"] = "user updated successfully!";
-                    return RedirectToAction("Users", "Dashboard");
+                    return RedirectToAction("Index", "Dashboard");
                 }
                 else
                 {
@@ -89,14 +92,14 @@ namespace MASHROEE.Controllers
                 return Content("user not found!");
             IdentityResult res =await userManager.DeleteAsync(userfDb);
             if (res.Succeeded)
-                return RedirectToAction("Users", "DashBoard");
+                return RedirectToAction("index", "DashBoard");
             else
             {
                 foreach(var error in res.Errors)
                     ModelState.AddModelError(string.Empty,error.Description);
             }
             }
-            return View("Users", "DashBoard");
+            return View("index", "DashBoard");
         }
         [HttpGet]
         public IActionResult addrole_forUser(string username)
@@ -106,7 +109,6 @@ namespace MASHROEE.Controllers
                 return Content("Username is required.");
             }
 
-            // عرض النموذج مع تمرير اسم المستخدم
             ViewBag.Username = username;
             return View();
         }
@@ -114,25 +116,25 @@ namespace MASHROEE.Controllers
         [HttpPost]
         public async Task<IActionResult> addrole_forUser(string username, string rolename)
         {
-            // التحقق من وجود المستخدم
+        
             var user = await userManager.FindByNameAsync(username);
             if (user == null)
             {
                 return Content("User not found.");
             }
 
-            // التحقق من وجود الدور
+          
             var findrole = roleManager.Roles.Any(r => r.Name == rolename);
             if (!findrole)
             {
                 return Content("Role not found.");
             }
 
-            // إضافة المستخدم إلى الدور
+          
             var result = await userManager.AddToRoleAsync(user, rolename);
             if (result.Succeeded)
             {
-                return RedirectToAction("Users", "DashBoard");
+                return RedirectToAction("index","DashBoard");
             }
 
             return Content("Failed to add role.");
@@ -152,14 +154,14 @@ namespace MASHROEE.Controllers
             IdentityResult res = await userManager.RemoveFromRoleAsync(user,rolename);
             if (res.Succeeded)
             {
-                return RedirectToAction("users", "DashBoard");
+                return RedirectToAction("index", "DashBoard");
             }
             else
             {
                 foreach (var error in res.Errors)
                     Console.WriteLine(error.Description);
             }
-            return View("Users", "DashBoard");
+            return View("index", "DashBoard");
         }
 
 

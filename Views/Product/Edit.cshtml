@@ -2,7 +2,6 @@
 
 @{
     ViewData["Title"] = "Edit";
-    var listcategory = ViewBag.listcategory;
 }
 
 <hr />
@@ -23,24 +22,27 @@
             </div>
             <div class="form-group">
                 <label for="CategoriesDropdown">Category</label>
-                <select name="CategoryName" id="categoryDropdown" class="form-control">
-                    <option value="0">>>Select Category For Your Product>></option>
-                    @foreach (var category in listcategory)
-                    {
-                        <option value="@category.Name">@category.Name</option>
-                    }
+                <select name="CategoryName" id="categoryDropdown" class="form-control" asp-items="@Model.categories">
+                        <option value="@Model.CategoryName">@Model.CategoryName</option>
                 </select>
                 <span asp-validation-for="CategoryName" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label asp-for="Quantity" class="control-label"> avaliable Quantity</label>
+                <input asp-for="Quantity" class="form-control" placeholder="Enter avaliable Quantity" />
+                <span asp-validation-for="Quantity" class="text-danger"></span>
+            </div>          
             <div class="form-group">
                 <label asp-for="Price" class="control-label">Price in $</label>
                 <input asp-for="Price" class="form-control" placeholder="$" />
                 <span asp-validation-for="Price" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <img src="@Model.image" class="card-img-top" alt="Image Not Found" style="height: 100px; object-fit: cover;">
                 <label asp-for="image" class="control-label"></label>
                 <input asp-for="image" type="file" class="form-control" />
                 <span asp-validation-for="image" class="text-danger"></span>
+                <input type="hidden" asp-for="image" value="@Model.image" />
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

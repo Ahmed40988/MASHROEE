@@ -1,0 +1,73 @@
+﻿@model List<Cartitem>
+@{
+    ViewData["Title"] = "Index";
+}
+<link href="~/css/cartitems.css" rel="stylesheet" />
+<link href="~/css/alert.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Your Shopping Cart</h2>
+
+    <table class="table table-bordered table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th>Image</th>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr class="cart-item-row">
+                    <td>
+                        @if (!string.IsNullOrEmpty(item.image))
+                        {
+                            <img src="@item.image" alt="@item.ProductName" class="cart-item-image" />
+                        }
+                        else
+                        {
+                            <span>No Image</span>
+                        }
+                    </td>
+                    <td>@item.ProductName</td>
+                    <td>
+                        <form asp-action="UpdateCartItem" method="post" class="form-inline">
+                            <input type="hidden" name="productId" value="@item.ProductId" />
+                            <input type="number" name="quantity" value="@item.Quantity" min="1" class="form-control" style="width: 80px;" />
+                            <button type="submit" class="btn btn-sm btn-primary ml-2">Update</button>
+                        </form>
+                    </td>
+                    <td>@item.Price.ToString("C")</td>
+                    <td>@item.TotalPrice.ToString("C")</td>
+                    <td>
+                        <form asp-action="RemoveFromCart" method="post" class="remove-form">
+                            <input type="hidden" name="productId" value="@item.ProductId" />
+                            <button type="submit" class="btn btn-sm btn-danger">Remove</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="text-right">
+        <h4>Grand Total: @Model.Sum(i => i.TotalPrice).ToString("C")</h4>
+        <form id="confirm-order-form" asp-action="ConfirmOrder" method="post" class="confirm-order-form">
+            <button type="button" class="btn btn-primary mt-2" id="confirm-order-btn">Confirm Order</button>
+        </form>
+
+        <form asp-action="ClearCart" method="post" class="clear-cart-form">
+            <button type="submit" class="btn btn-warning">Clear Cart</button>
+        </form>
+        <a href="/Checkout" class="btn btn-success mt-2">Proceed to Checkout</a>
+    </div>
+</div>
+<script src="~/js/Cart.js"></script>
+
+
+
