@@ -54,20 +54,19 @@ namespace MASHROEE.Controllers
                 return Json(new { success = false, message = "The available quantity is not enough." });
             }
         }
-
         [HttpPost]
         public async Task<IActionResult> ConfirmOrder()
         {
             var userid = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            var cartItems =await cartRepository.GetCartItemsAsync(userid); 
+            var cartItems = await cartRepository.GetCartItemsAsync(userid);
+
             foreach (var item in cartItems)
             {
-                var product =productRepository.GetProductById(item.ProductId);
+                var product = productRepository.GetProductById(item.ProductId); 
                 if (product != null && product.Quantity >= item.Quantity)
                 {
                     product.Quantity-= item.Quantity;
-                    productRepository.updateproduct(product);
-                    ClearCart();
+                    await productRepository.UpdateProductAsync(product);
                 }
                 else
                 {
@@ -78,6 +77,7 @@ namespace MASHROEE.Controllers
             TempData["Success"] = "Order confirmed successfully!";
             return RedirectToAction("Index");
         }
+
 
 
 
@@ -93,7 +93,7 @@ namespace MASHROEE.Controllers
             return RedirectToAction("Index");
         }
 
-        public async Task<IActionResult>ClearCart()
+        public async Task<IActionResult> ClearCart()
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (string.IsNullOrEmpty(userId))
@@ -113,7 +113,7 @@ namespace MASHROEE.Controllers
             {
             await cartRepository.UpdateCartItemQuantityAsync(userId, productid, quantity);
                 productDB.Quantity -= quantity;
-                productRepository.updateproduct(productDB);
+               await productRepository.UpdateProductAsync(productDB);
                 return RedirectToAction("index");
             }
             else

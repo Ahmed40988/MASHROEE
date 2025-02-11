@@ -27,13 +27,15 @@ namespace MASHROEE
                 options.Password.RequiredLength = 4;
             }
             )
-                .AddEntityFrameworkStores<MASHROEEDbContext>();
+                .AddEntityFrameworkStores<MASHROEEDbContext>().AddDefaultTokenProviders();
+            
 
 
             builder.Services.AddScoped<IProductRepository, ProductRepository>();
             builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
             builder.Services.AddScoped<ICartRepository, CartRepository>();
-            builder.Services.AddHttpContextAccessor();
+			builder.Services.AddScoped<IEmailSenderRepository,EmailSenderRepository>();
+			builder.Services.AddHttpContextAccessor();
 
             builder.Services.AddSession(options =>
             {

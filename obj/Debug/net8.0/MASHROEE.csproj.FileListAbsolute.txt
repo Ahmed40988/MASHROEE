@@ -269,3 +269,5 @@ D:\courses\back end.net\projects\MASHROEE\obj\Debug\net8.0\refint\MASHROEE.dll
 D:\courses\back end.net\projects\MASHROEE\obj\Debug\net8.0\MASHROEE.pdb
 D:\courses\back end.net\projects\MASHROEE\obj\Debug\net8.0\MASHROEE.genruntimeconfig.cache
 D:\courses\back end.net\projects\MASHROEE\obj\Debug\net8.0\ref\MASHROEE.dll
+D:\courses\back end.net\projects\MASHROEE\bin\Debug\net8.0\SendGrid.dll
+D:\courses\back end.net\projects\MASHROEE\bin\Debug\net8.0\StarkbankEcdsa.dll

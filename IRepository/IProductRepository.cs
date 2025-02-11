@@ -17,7 +17,7 @@ namespace MASHROEE.IRepository
         IEnumerable<Product> Searchbyprice(decimal SearchTerm); 
         IEnumerable<ProductViewModel> Maping(IEnumerable<Product> products);
       void AddProduct(Product product);
-      void updateproduct(Product product);
+        Task UpdateProductAsync(Product product);
         void RemoveProduct(int id);
 
 	}
