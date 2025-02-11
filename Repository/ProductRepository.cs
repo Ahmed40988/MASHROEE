@@ -80,11 +80,12 @@ namespace MASHROEE.Repository
             context.SaveChanges();
             Console.WriteLine($"Product {product.Name} added successfully.");
         }
-        public void updateproduct(Product product)
+        public async Task UpdateProductAsync(Product product)
         {
-            context.Entry(product).State = EntityState.Modified;
-            context.SaveChanges();
+            context.Products.Update(product);
+            await context.SaveChangesAsync();
         }
+
 
         public void RemoveProduct(int id)
         {

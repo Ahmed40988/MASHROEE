@@ -5,6 +5,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using System.Linq;
+using MASHROEE.IRepository;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace MASHROEE.Controllers
 {
@@ -13,13 +16,16 @@ namespace MASHROEE.Controllers
         private readonly UserManager<Applicationuser> userManager;
         private readonly SignInManager<Applicationuser> signInManager;
         private readonly RoleManager<IdentityRole> roleManager;
+		private readonly IEmailSenderRepository emailSenderRepository;
 
-        public AccountController(UserManager<Applicationuser> userManager, SignInManager<Applicationuser> signInManager,RoleManager<IdentityRole> roleManager)
+		public AccountController(UserManager<Applicationuser> userManager, SignInManager<Applicationuser> signInManager,
+            RoleManager<IdentityRole> roleManager, IEmailSenderRepository emailSenderRepository)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.roleManager = roleManager;
-        }
+			this.emailSenderRepository = emailSenderRepository;
+		}
 
         public IActionResult index()
         {
@@ -197,5 +203,76 @@ namespace MASHROEE.Controllers
             return View(newuser);
         }
 
-    }
+		public async Task<IActionResult> SendTestEmail()
+		{
+			await emailSenderRepository.SendEmailAsync("aalsdny244@gmail.com", "Test Email", "This is a test email from SendGrid!");
+			return Content("Email Sent Successfully!");
+		}
+
+		public ActionResult ForgotPassword()
+		{
+			return View(); 
+		}
+
+		[HttpPost]
+		public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel model)
+		{
+			if (ModelState.IsValid)
+			{
+				var user = await userManager.FindByEmailAsync(model.Email);
+				if (user == null )
+					return View("ForgotPasswordConfirmation");
+
+				// إنشاء رمز لإعادة تعيين كلمة المرور
+				var code = await userManager.GeneratePasswordResetTokenAsync(user);
+
+				// إنشاء رابط إعادة تعيين كلمة المرور
+				var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Scheme);
+
+
+                // إرسال البريد الإلكتروني
+                await emailSenderRepository.SendEmailAsync(user.Email, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+                return RedirectToAction("ResetPassword", "Account");
+			}
+
+			// إذا كانت البيانات غير صالحة، أعد عرض النموذج
+			return View(model);
+		}
+
+
+		public ActionResult ResetPassword(string code)
+		{
+			return code == null ? View("Error") : View(); 
+		}
+
+		[HttpPost]
+		[AllowAnonymous]
+		[ValidateAntiForgeryToken]
+		public async Task<ActionResult> ResetPassword(ResetPasswordViewModel model)
+		{
+			if (!ModelState.IsValid)
+			{
+				return View(model); 
+			}
+			var user = await userManager.FindByEmailAsync(model.Email);
+			if (user == null)
+			{
+				return RedirectToAction("ResetPasswordConfirmation", "Account");
+			}
+			var result = await userManager.ResetPasswordAsync(user, model.Code, model.Password);
+			if (result.Succeeded)
+			{
+				return RedirectToAction("Login", "Account");
+			}
+            else
+			{
+                foreach (var item in result.Errors)
+			   ModelState.AddModelError(string.Empty, item.Description);
+
+			}
+			return View();
+		}
+
+	}
 }

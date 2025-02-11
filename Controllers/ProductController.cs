@@ -170,7 +170,7 @@ namespace MASHROEE.Controllers
                 {
                     productDB.image = productDB.image;
                 }
-                productRepository.updateproduct(productDB);
+               await productRepository.UpdateProductAsync(productDB);
                 return RedirectToAction("index","Home");
             }
             return View(newp);

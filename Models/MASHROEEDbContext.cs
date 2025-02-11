@@ -17,7 +17,7 @@ namespace MASHROEE.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder); // استدعاء إعدادات الـ Identity الافتراضية
+            base.OnModelCreating(modelBuilder); 
 
             modelBuilder.Entity<Product>()
                 .HasOne(p => p.user)
