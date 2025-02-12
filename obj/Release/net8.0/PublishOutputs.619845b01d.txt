@@ -72,6 +72,8 @@ D:\courses\back end.net\projects\MASHROEE\obj\Release\net8.0\PubTmp\Out\NuGet.Pa
 D:\courses\back end.net\projects\MASHROEE\obj\Release\net8.0\PubTmp\Out\NuGet.ProjectModel.dll
 D:\courses\back end.net\projects\MASHROEE\obj\Release\net8.0\PubTmp\Out\NuGet.Protocol.dll
 D:\courses\back end.net\projects\MASHROEE\obj\Release\net8.0\PubTmp\Out\NuGet.Versioning.dll
+D:\courses\back end.net\projects\MASHROEE\obj\Release\net8.0\PubTmp\Out\SendGrid.dll
+D:\courses\back end.net\projects\MASHROEE\obj\Release\net8.0\PubTmp\Out\StarkbankEcdsa.dll
 D:\courses\back end.net\projects\MASHROEE\obj\Release\net8.0\PubTmp\Out\System.ClientModel.dll
 D:\courses\back end.net\projects\MASHROEE\obj\Release\net8.0\PubTmp\Out\System.CodeDom.dll
 D:\courses\back end.net\projects\MASHROEE\obj\Release\net8.0\PubTmp\Out\System.Composition.AttributedModel.dll

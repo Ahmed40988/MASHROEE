@@ -94,9 +94,10 @@
     </header>
 
     <div class="container">
-        <main role="main" class="pb-3">
+        <main role="main" class="pb-3" style="padding-top: 5rem !important;">
             @RenderBody()
         </main>
+
     </div>
   @if (!ViewData["HideFooter"]?.Equals(true) ?? true)
 {

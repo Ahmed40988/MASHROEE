@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MASHROEE")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6e59219f5f0831b678f30641dcdc499df7cebb48")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d9afcd33f49b0d68ec542a9cbaba8d50434069d1")]
 [assembly: System.Reflection.AssemblyProductAttribute("MASHROEE")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MASHROEE")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

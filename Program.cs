@@ -36,6 +36,8 @@ namespace MASHROEE
             builder.Services.AddScoped<ICartRepository, CartRepository>();
 			builder.Services.AddScoped<IEmailSenderRepository,EmailSenderRepository>();
 			builder.Services.AddHttpContextAccessor();
+            builder.Configuration.AddUserSecrets<Program>();
+
 
             builder.Services.AddSession(options =>
             {

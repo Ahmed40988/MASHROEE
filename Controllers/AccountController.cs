@@ -220,33 +220,37 @@ namespace MASHROEE.Controllers
 			if (ModelState.IsValid)
 			{
 				var user = await userManager.FindByEmailAsync(model.Email);
-				if (user == null )
-					return View("ForgotPasswordConfirmation");
+                if (user == null)
+                    return Content("Email id not found please register or Enter a vaild Email!");
 
-				// إنشاء رمز لإعادة تعيين كلمة المرور
 				var code = await userManager.GeneratePasswordResetTokenAsync(user);
-
-				// إنشاء رابط إعادة تعيين كلمة المرور
 				var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Scheme);
 
-
-                // إرسال البريد الإلكتروني
                 await emailSenderRepository.SendEmailAsync(user.Email, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                return RedirectToAction("ResetPassword", "Account");
-			}
+                return RedirectToAction("ForgotPasswordConfirmation", "Account");
 
-			// إذا كانت البيانات غير صالحة، أعد عرض النموذج
-			return View(model);
+            }
+            return View(model);
 		}
+         public IActionResult ForgotPasswordConfirmation()
+        {
+            return View();
+        }
 
 
-		public ActionResult ResetPassword(string code)
-		{
-			return code == null ? View("Error") : View(); 
-		}
 
-		[HttpPost]
+        public ActionResult ResetPassword(string code)
+        {
+            if (string.IsNullOrEmpty(code))
+            {
+                return View("Error_for ResetePassword");
+            }
+            return View(new ResetPasswordViewModel { Code = code });
+        }
+
+
+        [HttpPost]
 		[AllowAnonymous]
 		[ValidateAntiForgeryToken]
 		public async Task<ActionResult> ResetPassword(ResetPasswordViewModel model)
@@ -258,7 +262,7 @@ namespace MASHROEE.Controllers
 			var user = await userManager.FindByEmailAsync(model.Email);
 			if (user == null)
 			{
-				return RedirectToAction("ResetPasswordConfirmation", "Account");
+				return RedirectToAction("ResetPassword", "Account");
 			}
 			var result = await userManager.ResetPasswordAsync(user, model.Code, model.Password);
 			if (result.Succeeded)
@@ -271,7 +275,7 @@ namespace MASHROEE.Controllers
 			   ModelState.AddModelError(string.Empty, item.Description);
 
 			}
-			return View();
+			return View(model);
 		}
 
 	}
