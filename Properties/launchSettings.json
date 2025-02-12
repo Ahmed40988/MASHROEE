@@ -1,22 +1,13 @@
-﻿{
-  "$schema": "http://json.schemastore.org/launchsettings.json",
-  "iisSettings": {
-    "windowsAuthentication": false,
-    "anonymousAuthentication": true,
-    "iisExpress": {
-      "applicationUrl": "http://localhost:53498",
-      "sslPort": 0
-    }
-  },
+{
   "profiles": {
     "http": {
       "commandName": "Project",
-      "dotnetRunMessages": true,
       "launchBrowser": true,
-      "applicationUrl": "http://localhost:5212",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+        "SendGrid_ApiKey": "DevelopmSG.U9YxsyQZROOVp_1-0mOQJA.obD5fX0hhzj2qcpKb2Oa1q7quf8r8m2Pqv_fIF1-ipcent"
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "http://localhost:5212"
     },
     "IIS Express": {
       "commandName": "IISExpress",
@@ -24,6 +15,15 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
+    }
+  },
+  "$schema": "http://json.schemastore.org/launchsettings.json",
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:53498",
+      "sslPort": 0
     }
   }
 }
