@@ -112,8 +112,6 @@ namespace MASHROEE.Controllers
             if (productDB.Quantity >= quantity)
             {
             await cartRepository.UpdateCartItemQuantityAsync(userId, productid, quantity);
-                productDB.Quantity -= quantity;
-               await productRepository.UpdateProductAsync(productDB);
                 return RedirectToAction("index");
             }
             else

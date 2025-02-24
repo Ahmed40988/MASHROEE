@@ -52,7 +52,6 @@
 
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             let logoutSuccessMessage = '@TempData["LogoutSuccess"]';
@@ -62,7 +61,12 @@
                     title: "Logged Out",
                     text: logoutSuccessMessage,
                     icon: "info",
-                    confirmButtonColor: "#FFC300"
+                    confirmButtonText: 'OK',
+                    customClass: {
+                        popup: 'swal-custom-popup',
+                        title: 'swal-custom-title',
+                        confirmButton: 'swal-custom-button'
+                    }
                 });
             }
         });

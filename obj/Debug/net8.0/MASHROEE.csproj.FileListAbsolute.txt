@@ -1,5 +1,4 @@
 D:\courses\back end.net\projects\MASHROEE\bin\Debug\net8.0\appsettings.Development.json
-D:\courses\back end.net\projects\MASHROEE\bin\Debug\net8.0\appsettings.json
 D:\courses\back end.net\projects\MASHROEE\bin\Debug\net8.0\libman.json
 D:\courses\back end.net\projects\MASHROEE\bin\Debug\net8.0\MASHROEE.staticwebassets.runtime.json
 D:\courses\back end.net\projects\MASHROEE\bin\Debug\net8.0\MASHROEE.exe
@@ -271,3 +270,4 @@ D:\courses\back end.net\projects\MASHROEE\obj\Debug\net8.0\MASHROEE.genruntimeco
 D:\courses\back end.net\projects\MASHROEE\obj\Debug\net8.0\ref\MASHROEE.dll
 D:\courses\back end.net\projects\MASHROEE\bin\Debug\net8.0\SendGrid.dll
 D:\courses\back end.net\projects\MASHROEE\bin\Debug\net8.0\StarkbankEcdsa.dll
+D:\courses\back end.net\projects\MASHROEE\bin\Debug\net8.0\appsettings.json

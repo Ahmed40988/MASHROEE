@@ -1,4 +1,7 @@
-﻿namespace MASHROEE.Models
+﻿
+using System.ComponentModel.DataAnnotations;
+
+namespace MASHROEE.Models
 {
     public class Product
     {

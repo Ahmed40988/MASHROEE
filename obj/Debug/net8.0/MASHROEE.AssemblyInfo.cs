@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MASHROEE")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9d1ed0846e40a4523067cae83d7ae95fc7df35b0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1a1c6fa9d798d91e08876249162dafe0e231728a")]
 [assembly: System.Reflection.AssemblyProductAttribute("MASHROEE")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MASHROEE")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

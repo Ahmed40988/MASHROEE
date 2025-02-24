@@ -72,30 +72,34 @@ else
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            let loginSuccessMessage = '@TempData["LoginSuccess"]';
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let loginSuccessMessage = '@TempData["LoginSuccess"]';
 
-            if (loginSuccessMessage && sessionStorage.getItem("hideLoginAlert") !== "true") {
-                Swal.fire({
-                    title: "Success!",
-                    text: loginSuccessMessage,
-                    icon: "success",
-                    confirmButtonColor: "#FFC300"
-                }).then(() => {
-                    sessionStorage.setItem("hideLoginAlert", "true");
-                });
-            }
+        if (loginSuccessMessage && sessionStorage.getItem("hideLoginAlert") !== "true") {
+            Swal.fire({
+                title: "Success!",
+                text: loginSuccessMessage,
+                icon: "success",
+                confirmButtonText: 'OK',
+                customClass: {
+                    popup: 'swal-custom-popup',
+                    title: 'swal-custom-title',
+                    confirmButton: 'swal-custom-button'
+                }
+            }).then(() => {
+                sessionStorage.setItem("hideLoginAlert", "true");
+            });
+        }
 
-    
-            @if (TempData["LoginSuccess"] != null)
-            {
-                <text>
-                    @TempData.Remove("LoginSuccess");
-                </text>
-            }
-        });
-    </script>
+        @if (TempData["LoginSuccess"] != null)
+        {
+            <text>
+                @TempData.Remove("LoginSuccess");
+            </text>
+        }
+    });
+</script>
 }
 
 

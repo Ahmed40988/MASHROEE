@@ -16,19 +16,6 @@ namespace MASHROEE.Controllers
             this.productRepository = productRepository;
             this.categoryRepository = categoryRepository;
         }
-        public IActionResult Index()
-        {
-            var list = categoryRepository.GetAllCategorys().Select(c => new CategoryViewModel()
-            {
-                Id = c.Id,
-                Name = c.Name,
-                Description = c.Description,
-                ProductsCount = c.Products.Count()
-            }).OrderBy(c => c.ProductsCount).ToList();
-
-            return View(list);
-        }
-
         [HttpGet]
         [Authorize(Roles ="admin")]
         public IActionResult Create()

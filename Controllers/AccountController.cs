@@ -203,37 +203,95 @@ namespace MASHROEE.Controllers
             return View(newuser);
         }
 
-		public async Task<IActionResult> SendTestEmail()
-		{
-			await emailSenderRepository.SendEmailAsync("aalsdny244@gmail.com", "Test Email", "This is a test email from SendGrid!");
-			return Content("Email Sent Successfully!");
-		}
-
 		public ActionResult ForgotPassword()
 		{
 			return View(); 
 		}
 
-		[HttpPost]
-		public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel model)
-		{
-			if (ModelState.IsValid)
-			{
-				var user = await userManager.FindByEmailAsync(model.Email);
+        [HttpPost]
+        public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await userManager.FindByEmailAsync(model.Email);
                 if (user == null)
-                    return Content("Email id not found please register or Enter a vaild Email!");
+                {
+                    return Json(new { success = false, message = "Email id not found, please register or enter a valid email!" });
+                }
 
-				var code = await userManager.GeneratePasswordResetTokenAsync(user);
-				var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Scheme);
+                var code = await userManager.GeneratePasswordResetTokenAsync(user);
+                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Scheme);
 
-                await emailSenderRepository.SendEmailAsync(user.Email, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                string emailBody = $@"
+<html>
+<head>
+    <style>
+        body {{
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f4f4; 
+            padding: 20px;
+        }}
+        .container {{
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }}
+        .button {{
+            display: inline-block;
+            padding: 12px 24px;
+            margin: 20px 0;
+            font-size: 16px;
+            color: #fff;
+            background-color: #007BFF; 
+            text-decoration: none;
+            border-radius: 5px;
+        }}
+        .button:hover {{
+            background-color: #0056b3;
+        }}
+        .footer {{
+            margin-top: 20px;
+            font-size: 14px; 
+            color: #555; 
+        }}
+        p {{
+            font-size: 16px; 
+            color: #333; 
+        }}
+        a {{
+            color: #007BFF;
+            text-decoration: none;
+        }}
+        a:hover {{
+            text-decoration: underline;
+        }}
+    </style>
+</head>
+<body>
+    <div class='container'>
+        <p>Hello {user.Name},</p>
+        <p>We received a request to reset your account password. Please click the button below to reset your password:</p>
+        <a href='{callbackUrl}' class='button'>Reset Password</a>
+        <p>If you did not request a password reset, you can safely ignore this email.</p>
+        <div class='footer'>
+            <p>Best regards,</p>
+            <p>Support Team</p>
+        </div>
+    </div>
+</body>
+</html>";
 
-                return RedirectToAction("ForgotPasswordConfirmation", "Account");
+                await emailSenderRepository.SendEmailAsync(user.Email, "Password Reset Request", emailBody);
 
+                return Json(new { success = true, message = "Password reset email sent successfully. Please Check Your Email To Reset Password!" });
             }
-            return View(model);
-		}
-         public IActionResult ForgotPasswordConfirmation()
+
+            return Json(new { success = false, message = "Invalid model state." });
+        }
+        public IActionResult ForgotPasswordConfirmation()
         {
             return View();
         }
@@ -277,6 +335,7 @@ namespace MASHROEE.Controllers
 			}
 			return View(model);
 		}
+
 
 	}
 }

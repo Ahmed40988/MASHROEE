@@ -23,6 +23,7 @@ namespace MASHROEE.Controllers
             this.userManager = userManager;
         }
 
+
         public IActionResult Index()
         {
             var list = productRepository.GetAllProducts();
@@ -114,7 +115,7 @@ namespace MASHROEE.Controllers
                         product.image = "/images/" + image.FileName;
                     }
                     productRepository.AddProduct(product);
-                    return RedirectToAction("Index");
+                    return RedirectToAction("MyProducts");
                 }
                 return Content("Category is not found");
             }
@@ -127,20 +128,30 @@ namespace MASHROEE.Controllers
         public IActionResult Edit(int id)
         {
             var listcategory=categoryRepository.Getselectlist();
-            var product = productRepository.GetProductById(id) ;
-            var model = new ProductViewModel()
+                var product = productRepository.GetProductById(id) ;
+            var userid = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (userid != null)
             {
-                Id = product.Id,
-                Name = product.Name,
-                Description = product.Description,
-                Price = product.Price,
-                Quantity= product.Quantity,
-                CreatedDate = product.CreatedDate,
-                image= product.image,
-                categories=listcategory,
-                CategoryName = product.category?.Name ?? "No Category"
-            };
-            return View(model);
+                if(product.userid == userid ||User.IsInRole("admin"))
+                {
+
+                    var model = new ProductViewModel()
+                    {
+                        Id = product.Id,
+                        Name = product.Name,
+                        Description = product.Description,
+                        Price = product.Price,
+                        Quantity = product.Quantity,
+                        CreatedDate = product.CreatedDate,
+                        image = product.image,
+                        categories = listcategory,
+                        CategoryName = product.category?.Name ?? "No Category"
+                    };
+                    return View(model);
+                }
+                return Forbid();
+            }
+            return Forbid();
         }
         [HttpPost]  
         public async Task<IActionResult> Edit(int id,ProductViewModel newp,IFormFile?image)
@@ -171,16 +182,26 @@ namespace MASHROEE.Controllers
                     productDB.image = productDB.image;
                 }
                await productRepository.UpdateProductAsync(productDB);
-                return RedirectToAction("index","Home");
+                return RedirectToAction("MyProducts");
             }
             return View(newp);
         }
         [Authorize(Roles = "admin,Supplier")]
         public ActionResult Delete(int id)
         {
-            productRepository.RemoveProduct(id);
-            ViewBag.DeleteSuccess = "Product deleted successfully!";
-            return RedirectToAction("index", "Home");
+            var product = productRepository.GetProductById(id);
+            var userid = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (userid != null)
+            {
+                if (product.userid == userid || User.IsInRole("admin"))
+                {
+                    productRepository.RemoveProduct(id);
+                    ViewBag.DeleteSuccess = "Product deleted successfully!";
+                    return RedirectToAction("MyProducts");
+                }
+                return Forbid();
+            }
+            return Forbid();
         }
         [Authorize]
         [Authorize(Roles = "admin,Supplier")]
